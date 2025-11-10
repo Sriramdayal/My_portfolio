@@ -8,6 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    
+    <script
+        type="module"
+        src="https://gradio.s3-us-west-2.amazonaws.com/5.42.0/gradio.js"
+    ></script>
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -129,16 +135,10 @@
                     <h2 class="text-xl font-bold text-gray-900 mb-4">Interactive Demo (Jarvis)</h2>
                     <p class="text-gray-600 mb-4">
                         An interactive demo of my "Jarvis" AI assistant, hosted on Hugging Face Spaces.
-                    </p>
+                    </D>
                     
-                    <iframe
-                        src="https://black279-jarvis.hf.space/"
-                        frameborder="0"
-                        class="w-full h-[600px] border border-gray-300 rounded-lg shadow-inner"
-                        title="Jarvis Hugging Face Space"
-                        allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-                        sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-                    ></iframe>
+                    <gradio-app src="https://black279-jarvis.hf.space"></gradio-app>
+
                 </section>
                 <section id="contributions" class="bg-white rounded-lg shadow-md p-6">
                     <h2 class="text-xl font-bold text-gray-900 mb-4">Open Source Contributions</h2>
@@ -201,7 +201,7 @@
                           </div>
                         </div>
                         <div>
-                          <h3 class="text-lg font-semibold text-gray-800 mb-3">Domains</h3>
+                          <h3 class_name="text-lg font-semibold text-gray-800 mb-3">Domains</h3>
                           <div class="flex flex-wrap gap-2">
                             <span class="flex items-center gap-2 bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">
                               <i data-lucide="eye" class="w-4 h-4"></i> Computer Vision
