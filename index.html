@@ -1,297 +1,494 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramachandra Dayal K - Portfolio</title>
+    <title>RDK // Neural Interface</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        /* Custom dark mode styles */
-        .dark .bg-gray-100 { background-color: #111827; }
-        .dark .bg-white { background-color: #1f2937; }
-        .dark .text-gray-800 { color: #d1d5db; }
-        .dark .text-gray-900 { color: #f9fafb; }
-        .dark .text-gray-700 { color: #d1d5db; }
-        .dark .text-gray-600 { color: #9ca3af; }
-        .dark .text-gray-500 { color: #6b7280; }
-        .dark .border-t { border-color: #374151; }
-        .dark .shadow-sm { box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.05); }
-        .dark .bg-cyan-100 { background-color: #0e7490; }
-        .dark .text-cyan-800 { color: #ecfeff; }
-        .dark .bg-gray-50 { background-color: #374151; }
-        .dark .border-gray-300 { border-color: #4b5563; }
+        /* Custom Scrollbar for Cyberpunk feel */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+        
+        /* Animations */
+        .cursor-blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .fade-enter { opacity: 0; transform: translateY(10px); }
+        .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 300ms ease-out, transform 300ms ease-out; }
+        .hidden-view { display: none !important; }
+        
+        .glass-panel { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(30, 41, 59, 0.5); }
     </style>
-    <script>
-        // Set theme on page load
-        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
-        } else {
-            document.documentElement.classList.remove('dark')
-        }
-    </script>
 </head>
-<body class="bg-gray-100 text-gray-800 transition-colors duration-300">
+<body class="bg-slate-950 text-slate-200 font-mono h-screen overflow-hidden flex selection:bg-cyan-500/30">
 
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-cyan-600">RDK</a>
-            <nav class="hidden md:flex space-x-6 text-gray-600">
-                <a href="#about" class="hover:text-cyan-600 transition-colors">About</a>
-                <a href="#projects" class="hover:text-cyan-600 transition-colors">Projects</a>
-                <a href="#contributions" class="hover:text-cyan-600 transition-colors">Contributions</a>
-                <a href="#skills" class="hover:text-cyan-600 transition-colors">Skills</a>
-                <a href="#contact" class="hover:text-cyan-600 transition-colors">Contact</a>
-            </nav>
-            <div class="hidden md:flex items-center space-x-4">
-                <button id="theme-toggle" class="p-2 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700">
-                    <i id="theme-icon-sun" data-lucide="sun" class="w-5 h-5"></i>
-                    <i id="theme-icon-moon" data-lucide="moon" class="w-5 h-5 hidden"></i>
-                </button>
-            </div>
-             <button id="mobile-menu-button" class="md:hidden">
-                <i data-lucide="menu" class="w-6 h-6 text-gray-600"></i>
-            </button>
-        </div>
-         <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 border-t">
-            <a href="#about" class="block py-2 text-gray-600 hover:text-cyan-600">About</a>
-            <a href="#projects" class="block py-2 text-gray-600 hover:text-cyan-600">Projects</a>
-            <a href="#contributions" class="block py-2 text-gray-600 hover:text-cyan-600">Contributions</a>
-            <a href="#skills" class="block py-2 text-gray-600 hover:text-cyan-600">Skills</a>
-            <a href="#contact" class="block py-2 text-gray-600 hover:text-cyan-600">Contact</a>
-              <button id="theme-toggle-mobile" class="mt-4 w-full flex items-center justify-center p-2 rounded-lg text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700">
-                <i id="theme-icon-sun-mobile" data-lucide="sun" class="w-5 h-5 mr-2"></i>
-                <i id="theme-icon-moon-mobile" data-lucide="moon" class="w-5 h-5 mr-2 hidden"></i>
-                <span id="theme-text-mobile">Switch to Dark Mode</span>
-            </button>
-        </div>
-    </header>
-
-    <div class="container mx-auto p-4 md:p-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            <aside class="lg:col-span-1 space-y-8">
-                <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                    <img src="images/portfolio.png" alt="Ramachandra Dayal K" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-cyan-500 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e2e8f0/334155?text=RDK';">
-                    <h1 class="text-2xl font-bold text-gray-900">Ramachandra Dayal K</h1>
-                    <p class="text-md text-gray-600 mt-1">🎯 AI Engineer | ⚙️ Machine Learning & Deep Learning | 🧠 Computer Vision & NLP</p>
-                    <p class="text-sm text-gray-500 mt-2">Chennai, India</p>
-                    <div class="mt-6 flex justify-center space-x-4">
-                        <a href="https://github.com/Sriramdayal" target="_blank" class="text-gray-500 hover:text-cyan-600" title="GitHub"><i data-lucide="github" class="w-6 h-6"></i></a>
-                        <a href="https://linkedin.com/in/ramachandradayalk" target="_blank" class="text-gray-500 hover:text-cyan-600" title="LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                        <a href="https://black279-jarvis.hf.space/" target="_blank" class="text-gray-500 hover:text-cyan-600" title="AI Demo (Jarvis)"><i data-lucide="bot" class="w-6 h-6"></i></a>
-                    </div>
-                    <a href="#contact" class="mt-6 inline-block w-full bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Contact Info</a>
-                </div>
-            </aside>
-
-            <main class="lg:col-span-2 space-y-8">
-                <section id="about" class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-bold text-gray-900 mb-4">About</h2>
-                    <p class="text-gray-700 leading-relaxed">
-                        I enjoy the full journey: cleaning chaotic data, building pipelines that actually run, and watching models make sense of the world in real time.To me, AI isn’t about hype — it’s about curiosity, precision, and creating something that feels alive in how it learns and reacts.
-                    </p>
-                </section>
-
-                <section id="projects" class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-bold text-gray-900 mb-4">Projects</h2>
-                    <div class="space-y-6">
-                        <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4">
-                            <div class="flex-shrink-0">
-                                <img src="images/Lionel_Messi_Player_of_the_Year_2011.jpg" alt="Project Icon" class="w-16 h-16 rounded-md object-cover">
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-800">Player Re-Identification (YOLOv8+ TorchReID)</h3>
-                                <p class="text-sm text-gray-600 mt-1">Developed a pipeline to detect, track, and re-identify football players, integrating OCR for jersey number recognition.</p>
-                                <a href="https://github.com/Sriramdayal/Re_identification" target="_blank" class="text-sm text-cyan-600 hover:underline mt-2 inline-block">View on GitHub &rarr;</a>
-                            </div>
-                        </div>
-                        <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4">
-                            <div class="flex-shrink-0">
-                                <img src="images/360_F_1032469808_5AKt0mOrQCn1uF3Bq5mAM4HBrZ8Njy1b.webp" alt="Project Icon" class="w-16 h-16 rounded-md object-cover">
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-800">Sensor Data Processing for Exercise Recognition</h3>
-                                <p class="text-sm text-gray-600 mt-1">Built ML models to classify barbell exercises and count repetitions from MetaMotion sensor data.</p>
-                                <a href="https://colab.research.google.com/drive/13zKf7evJWQWiJlykDDfOb9zzVqVEu_9f?usp=sharing&pli=1&authuser=3" target="_blank" class="text-sm text-cyan-600 hover:underline mt-2 inline-block">Source &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="contributions" class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-bold text-gray-900 mb-4">Open Source Contributions</h2>
-                    <div class="space-y-6">
-                        <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4">
-                            <div class="flex-shrink-0">
-                                <img src="images/abstract-curly-tendrils-background.webp" alt="Project Icon" class="w-16 h-16 rounded-md object-cover">
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-800">SEAL–BDH Hybrid Architecture: Synergistic Emergent Adaptive Learning</h3>
-                                <p class="text-sm text-gray-600 mt-1">SEAL–BDH (Self–Evolving Adaptive Learning × Bio–inspired Dragon Hatchling) is a hybrid simulation exploring how adaptive self-improvement and biologically inspired neural dynamics can coexist within one unified system.</p>
-                                <a href="https://github.com/Sriramdayal/Hybrid_BDH-SEAL" target="_blank" class="text-sm text-cyan-600 hover:underline mt-2 inline-block">View on GitHub &rarr;</a>
-                            </div>
-                        </div>
-                        <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4">
-                            <div class="flex-shrink-0">
-                                <img src="images/250px-PyPI_logo.svg.webp" alt="Project Icon" class="w-16 h-16 rounded-md object-cover">
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-800">Py-Easy-Env: The Visual Python Environment Manager</h3>
-                                <p class="text-sm text-gray-600 mt-1">A modern graphical user interface (GUI) for managing Python project dependencies and environments — without the hassle of complex command-line workflows. Inspired by tools like Poetry and Pipenv, but designed with simplicity and visual ease in mind.</p>
-                                <a href="https://github.com/Sriramdayal/py-easy-env-manager" target="_blank" class="text-sm text-cyan-600 hover:underline mt-2 inline-block">View on GitHub &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="skills" class="bg-white rounded-lg shadow-md p-6">
-                  <h2 class="text-xl font-bold text-gray-900 mb-6">Skills</h2>
-                  <div class="space-y-6">
-                        <div>
-                          <h3 class="text-lg font-semibold text-gray-800 mb-3">Programming Languages</h3>
-                          <div class="flex flex-wrap gap-2">
-                            <span class="flex items-center gap-2 bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">
-                              <i class="devicon-python-plain colored text-lg"></i> Python
-                            </span>
-                            <span class="flex items-center gap-2 bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">
-                              <i class="devicon-java-plain colored text-lg"></i> Java
-                            </span>
-                            <span class="flex items-center gap-2 bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">
-                              <i class="devicon-mysql-plain colored text-lg"></i> SQL
-                            </span>
-                          </div>
-                        </div>
-                        <div>
-                          <h3 class="text-lg font-semibold text-gray-800 mb-3">Frameworks & Libraries</h3>
-                          <div class="flex flex-wrap gap-2">
-                            <span class="flex items-center gap-2 bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">
-                              <i class="devicon-pytorch-original colored text-lg"></i> PyTorch
-                            </span>
-                            <span class="flex items-center gap-2 bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">
-                              <i class="devicon-tensorflow-original colored text-lg"></i> TensorFlow
-                            </span>
-                            <span class="flex items-center gap-2 bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">
-                              <i class="devicon-scikitlearn-plain colored text-lg"></i> Scikit-learn
-                            </span>
-                            <span class="flex items-center gap-2 bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">
-                               <i class="devicon-opencv-plain colored text-lg"></i> OpenCV
-                            </span>
-                          </div>
-                        </div>
-                        <div>
-                          <h3 class="text-lg font-semibold text-gray-800 mb-3">Domains</h3>
-                          <div class="flex flex-wrap gap-2">
-                            <span class="flex items-center gap-2 bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">
-                              <i data-lucide="eye" class="w-4 h-4"></i> Computer Vision
-                            </span>
-                            <span class="flex items-center gap-2 bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">
-                              <i data-lucide="brain-circuit" class="w-4 h-4"></i> NLP
-                            </span>
-                            <span class="flex items-center gap-2 bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">
-                              <i data-lucide="line-chart" class="w-4 h-4"></i> Time-Series
-                            </span>
-                          </div>
-                        </div>
-                  </div>
-                </section>
-
-                <section id="contact" class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-bold text-gray-900 mb-4">Contact Me</h2>
-                        <form action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST">
-                            <div class="mb-4">
-                                <label for="name" class="block text-gray-700 mb-1 text-sm font-medium">Your Name</label>
-                                <input type="text" id="name" name="name" class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="email" class="block text-gray-700 mb-1 text-sm font-medium">Your Email</label>
-                                <input type="email" id="email" name="email" class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="message" class="block text-gray-700 mb-1 text-sm font-medium">Message</label>
-                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" required></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                                Send Message
-                            </button>
-                        </form>
-                </section>
-
-            </main>
-        </div>
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-950/95 z-50 hidden flex-col items-center justify-center space-y-8 md:hidden backdrop-blur-xl">
+        <button onclick="switchView('terminal'); toggleMobileMenu()" class="text-xl text-cyan-400 font-bold tracking-widest">TERMINAL</button>
+        <button onclick="switchView('projects'); toggleMobileMenu()" class="text-xl text-slate-300 hover:text-cyan-400">PROJECTS</button>
+        <button onclick="switchView('skills'); toggleMobileMenu()" class="text-xl text-slate-300 hover:text-cyan-400">SKILLS</button>
+        <button onclick="switchView('contact'); toggleMobileMenu()" class="text-xl text-slate-300 hover:text-cyan-400">CONTACT</button>
+        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-slate-500 hover:text-red-400"><i data-lucide="x"></i></button>
     </div>
 
-    <footer class="text-center py-6 border-t mt-8">
-        <p class="text-sm text-gray-500">&copy; 2025 Ramachandra Dayal K. All Rights Reserved.</p>
-    </footer>
+    <aside class="hidden md:flex w-72 bg-slate-900/50 border-r border-slate-800 flex-col justify-between z-20 backdrop-blur-sm">
+        <div>
+            <div class="p-6 flex items-center gap-4 border-b border-slate-800/50">
+                <div class="relative">
+                    <div class="w-12 h-12 rounded-full bg-slate-800 overflow-hidden border-2 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.3)]">
+                        <img src="images/portfolio.png" onerror="this.src='https://placehold.co/128x128/0f172a/06b6d4?text=RDK'" alt="RDK" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-slate-900 animate-pulse"></div>
+                </div>
+                <div>
+                    <h1 class="font-bold text-slate-100 tracking-wider text-lg">RDK.ai</h1>
+                    <p class="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">AI Engineer</p>
+                </div>
+            </div>
+            
+            <nav class="mt-6 px-3 space-y-2">
+                <button onclick="switchView('terminal')" id="nav-terminal" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 group">
+                    <i data-lucide="terminal" class="w-5 h-5 group-hover:text-cyan-300"></i>
+                    <span class="text-sm font-medium tracking-wide">COMMAND_LINE</span>
+                </button>
+                <button onclick="switchView('projects')" id="nav-projects" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-slate-500 hover:bg-slate-800 hover:text-slate-200 group">
+                    <i data-lucide="cpu" class="w-5 h-5 group-hover:text-purple-400"></i>
+                    <span class="text-sm font-medium tracking-wide">PROJECT_INDEX</span>
+                </button>
+                <button onclick="switchView('skills')" id="nav-skills" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-slate-500 hover:bg-slate-800 hover:text-slate-200 group">
+                    <i data-lucide="activity" class="w-5 h-5 group-hover:text-green-400"></i>
+                    <span class="text-sm font-medium tracking-wide">CAPABILITIES</span>
+                </button>
+                <button onclick="switchView('contact')" id="nav-contact" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-slate-500 hover:bg-slate-800 hover:text-slate-200 group">
+                    <i data-lucide="radio-tower" class="w-5 h-5 group-hover:text-orange-400"></i>
+                    <span class="text-sm font-medium tracking-wide">UPLINK</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="p-6">
+            <div class="glass-panel rounded-lg p-4">
+                <div class="flex items-center justify-between text-[10px] text-slate-400 mb-1 uppercase tracking-wider">
+                    <span>Model Inference</span>
+                    <span id="gpu-stat" class="text-cyan-400">0%</span>
+                </div>
+                <div class="w-full bg-slate-700/30 h-1 rounded-full mb-3">
+                    <div id="gpu-bar" class="bg-cyan-500 h-1 rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]" style="width: 0%"></div>
+                </div>
+                <div class="flex items-center justify-between text-[10px] text-slate-400 mb-1 uppercase tracking-wider">
+                    <span>Memory alloc</span>
+                    <span id="ram-stat" class="text-purple-400">0%</span>
+                </div>
+                <div class="w-full bg-slate-700/30 h-1 rounded-full">
+                    <div id="ram-bar" class="bg-purple-500 h-1 rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="mt-4 flex justify-center gap-4">
+                <a href="https://github.com/Sriramdayal" target="_blank" class="text-slate-500 hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                <a href="https://linkedin.com/in/ramachandradayalk" target="_blank" class="text-slate-500 hover:text-cyan-400 transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                <a href="https://black279-jarvis.hf.space/" target="_blank" class="text-slate-500 hover:text-purple-400 transition-colors" title="AI Demo"><i data-lucide="bot" class="w-5 h-5"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-hidden relative bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950">
+        
+        <header class="h-16 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-6 z-10">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-400 hover:text-cyan-400">
+                    <i data-lucide="menu"></i>
+                </button>
+                <h2 id="header-title" class="text-lg font-bold text-cyan-500 uppercase tracking-widest flex items-center gap-2">
+                    <span class="animate-pulse">_</span> TERMINAL_MODULE
+                </h2>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-mono text-slate-500">
+                <span class="hidden sm:block text-emerald-500">● CHENNAI, IN</span>
+                <span class="hidden sm:block opacity-20">|</span>
+                <span id="system-clock">00:00:00</span>
+            </div>
+        </header>
+
+        <div class="flex-1 p-4 md:p-8 overflow-y-auto relative scroll-smooth">
+            
+            <div id="view-terminal" class="view-section h-full max-w-4xl mx-auto flex flex-col">
+                <div class="glass-panel rounded-lg p-1 flex-1 flex flex-col shadow-[0_0_30px_rgba(0,0,0,0.3)]">
+                    <div class="bg-slate-950/80 rounded p-6 flex-1 flex flex-col overflow-hidden">
+                        <div class="flex gap-2 mb-4 border-b border-slate-800 pb-2 opacity-50">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <span class="ml-2 text-slate-500 text-xs">root@rdk-neural-net:~</span>
+                        </div>
+                        
+                        <div id="terminal-output" class="flex-1 overflow-y-auto space-y-2 mb-2 text-sm md:text-base font-fira-code">
+                            <div class="text-slate-500">// Initializing System...</div>
+                            <div class="text-slate-500">// Loading Bio-Metrics... OK</div>
+                            <div class="text-slate-300">Welcome to the portfolio of <span class="text-cyan-400 font-bold">Ramachandra Dayal K</span>.</div>
+                            <div class="text-slate-300">Specialization: <span class="text-purple-400">Computer Vision & NLP</span>.</div>
+                            <br>
+                            <div class="text-yellow-500 border-l-2 border-yellow-500 pl-2 italic opacity-80">
+                                "I enjoy the full journey: cleaning chaotic data, building pipelines that actually run, and watching models make sense of the world in real time."
+                            </div>
+                            <br>
+                            <div class="text-cyan-600">Type 'help' to view available commands.</div>
+                        </div>
+
+                        <div class="flex items-center text-cyan-400 text-sm md:text-base mt-2">
+                            <span class="mr-2 font-bold">➜</span>
+                            <input type="text" id="terminal-input" autocomplete="off" 
+                                class="bg-transparent border-none outline-none flex-1 text-slate-100 placeholder-slate-800" 
+                                placeholder="Enter command..." autofocus>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-projects" class="view-section hidden-view max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                    
+                    <div class="group glass-panel p-6 rounded-xl relative overflow-hidden hover:border-cyan-500/50 transition-colors duration-300">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                            <i data-lucide="eye" class="w-24 h-24 text-cyan-400"></i>
+                        </div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <h3 class="text-xl font-bold text-slate-100 group-hover:text-cyan-400 transition-colors">Player Re-Identification</h3>
+                            <span class="px-2 py-1 rounded text-[10px] font-bold bg-cyan-900/30 text-cyan-400 border border-cyan-800 uppercase">Computer Vision</span>
+                        </div>
+                        <p class="text-slate-400 mb-4 text-sm leading-relaxed relative z-10">
+                            Developed a full pipeline to detect, track, and re-identify football players using YOLOv8 and TorchReID. Integrated OCR for jersey number recognition to handle occlusion.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto relative z-10 mb-4">
+                            <span class="tech-tag">YOLOv8</span>
+                            <span class="tech-tag">TorchReID</span>
+                            <span class="tech-tag">OCR</span>
+                        </div>
+                        <a href="https://github.com/Sriramdayal/Re_identification" target="_blank" class="inline-flex items-center text-sm text-cyan-500 hover:text-cyan-300 transition-colors relative z-10">
+                            <i data-lucide="github" class="w-4 h-4 mr-2"></i> View Source Code
+                        </a>
+                    </div>
+
+                    <div class="group glass-panel p-6 rounded-xl relative overflow-hidden hover:border-blue-500/50 transition-colors duration-300">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                            <i data-lucide="zap" class="w-24 h-24 text-blue-400"></i>
+                        </div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <h3 class="text-xl font-bold text-slate-100 group-hover:text-blue-400 transition-colors">Finetuned Model using Unsloth</h3>
+                            <span class="px-2 py-1 rounded text-[10px] font-bold bg-blue-900/30 text-blue-400 border border-blue-800 uppercase">LLM Fine-tuning</span>
+                        </div>
+                        <p class="text-slate-400 mb-4 text-sm leading-relaxed relative z-10">
+                            Fine-tuned the Qwen language model specifically for LeetCode competitive programming using Unsloth, achieving optimized training speed and memory efficiency.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto relative z-10 mb-4">
+                            <span class="tech-tag">Unsloth</span>
+                            <span class="tech-tag">Qwen</span>
+                            <span class="tech-tag">Hugging Face</span>
+                        </div>
+                        <div class="flex gap-4 relative z-10">
+                            <a href="https://huggingface.co/black279/Qwen_LeetCoder" target="_blank" class="inline-flex items-center text-sm text-blue-500 hover:text-blue-300 transition-colors">
+                                <i data-lucide="box" class="w-4 h-4 mr-2"></i> Model
+                            </a>
+                            <a href="https://github.com/Sriramdayal/Unsloth-LLM-finetuningv1.git" target="_blank" class="inline-flex items-center text-sm text-blue-500 hover:text-blue-300 transition-colors">
+                                <i data-lucide="github" class="w-4 h-4 mr-2"></i> Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="group glass-panel p-6 rounded-xl relative overflow-hidden hover:border-purple-500/50 transition-colors duration-300">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                            <i data-lucide="activity" class="w-24 h-24 text-purple-400"></i>
+                        </div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <h3 class="text-xl font-bold text-slate-100 group-hover:text-purple-400 transition-colors">Sensor Data Exercise Rec.</h3>
+                            <span class="px-2 py-1 rounded text-[10px] font-bold bg-purple-900/30 text-purple-400 border border-purple-800 uppercase">Machine Learning</span>
+                        </div>
+                        <p class="text-slate-400 mb-4 text-sm leading-relaxed relative z-10">
+                            Built ML models to classify barbell exercises and count repetitions from MetaMotion sensor data. Processed time-series data for real-time activity recognition.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto relative z-10 mb-4">
+                            <span class="tech-tag">Scikit-Learn</span>
+                            <span class="tech-tag">Time-Series</span>
+                            <span class="tech-tag">Pandas</span>
+                        </div>
+                        <a href="https://colab.research.google.com/drive/13zKf7evJWQWiJlykDDfOb9zzVqVEu_9f?usp=sharing&pli=1&authuser=3" target="_blank" class="inline-flex items-center text-sm text-purple-500 hover:text-purple-300 transition-colors relative z-10">
+                            <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> View Notebook
+                        </a>
+                    </div>
+
+                    <div class="group glass-panel p-6 rounded-xl relative overflow-hidden hover:border-green-500/50 transition-colors duration-300">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                            <i data-lucide="git-branch" class="w-24 h-24 text-green-400"></i>
+                        </div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <h3 class="text-xl font-bold text-slate-100 group-hover:text-green-400 transition-colors">SEAL–BDH Architecture</h3>
+                            <span class="px-2 py-1 rounded text-[10px] font-bold bg-green-900/30 text-green-400 border border-green-800 uppercase">Research / Hybrid AI</span>
+                        </div>
+                        <p class="text-slate-400 mb-4 text-sm leading-relaxed relative z-10">
+                            A hybrid simulation exploring how adaptive self-improvement and biologically inspired neural dynamics (Dragon Hatchling) can coexist within one unified system.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto relative z-10 mb-4">
+                            <span class="tech-tag">Adaptive Learning</span>
+                            <span class="tech-tag">Bio-Inspired</span>
+                            <span class="tech-tag">Simulation</span>
+                        </div>
+                        <a href="https://github.com/Sriramdayal/Hybrid_BDH-SEAL" target="_blank" class="inline-flex items-center text-sm text-green-500 hover:text-green-300 transition-colors relative z-10">
+                            <i data-lucide="github" class="w-4 h-4 mr-2"></i> View Repository
+                        </a>
+                    </div>
+
+                    <div class="group glass-panel p-6 rounded-xl relative overflow-hidden hover:border-orange-500/50 transition-colors duration-300">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                            <i data-lucide="box" class="w-24 h-24 text-orange-400"></i>
+                        </div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <h3 class="text-xl font-bold text-slate-100 group-hover:text-orange-400 transition-colors">Py-Easy-Env</h3>
+                            <span class="px-2 py-1 rounded text-[10px] font-bold bg-orange-900/30 text-orange-400 border border-orange-800 uppercase">Dev Tooling</span>
+                        </div>
+                        <p class="text-slate-400 mb-4 text-sm leading-relaxed relative z-10">
+                            A modern graphical user interface (GUI) for managing Python project dependencies and environments, abstracting complex CLI workflows.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto relative z-10 mb-4">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">GUI</span>
+                            <span class="tech-tag">Env Manager</span>
+                        </div>
+                        <a href="https://github.com/Sriramdayal/py-easy-env-manager" target="_blank" class="inline-flex items-center text-sm text-orange-500 hover:text-orange-300 transition-colors relative z-10">
+                            <i data-lucide="github" class="w-4 h-4 mr-2"></i> View Tool
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="view-skills" class="view-section hidden-view max-w-4xl mx-auto space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <div class="glass-panel p-6 rounded-xl">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i data-lucide="code-2" class="text-cyan-400"></i>
+                            <h3 class="text-lg font-bold text-slate-200">Languages</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Python</span><span>95%</span></div>
+                                <div class="h-1.5 bg-slate-700 rounded-full"><div class="h-full bg-cyan-500 rounded-full" style="width: 95%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Java</span><span>80%</span></div>
+                                <div class="h-1.5 bg-slate-700 rounded-full"><div class="h-full bg-cyan-500 rounded-full opacity-70" style="width: 80%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-400 mb-1"><span>SQL</span><span>85%</span></div>
+                                <div class="h-1.5 bg-slate-700 rounded-full"><div class="h-full bg-cyan-500 rounded-full opacity-80" style="width: 85%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-xl">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i data-lucide="layers" class="text-purple-400"></i>
+                            <h3 class="text-lg font-bold text-slate-200">Frameworks/Libraries</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-400 mb-1"><span>PyTorch</span><span>90%</span></div>
+                                <div class="h-1.5 bg-slate-700 rounded-full"><div class="h-full bg-purple-500 rounded-full" style="width: 90%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-400 mb-1"><span>TensorFlow</span><span>85%</span></div>
+                                <div class="h-1.5 bg-slate-700 rounded-full"><div class="h-full bg-purple-500 rounded-full opacity-80" style="width: 85%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-400 mb-1"><span>OpenCV / Scikit-learn</span><span>88%</span></div>
+                                <div class="h-1.5 bg-slate-700 rounded-full"><div class="h-full bg-purple-500 rounded-full opacity-90" style="width: 88%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-xl md:col-span-2">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i data-lucide="brain-circuit" class="text-green-400"></i>
+                            <h3 class="text-lg font-bold text-slate-200">Domains</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-sm text-slate-300 flex items-center gap-2"><i data-lucide="eye" class="w-4 h-4 text-green-400"></i> Computer Vision</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-sm text-slate-300 flex items-center gap-2"><i data-lucide="message-square" class="w-4 h-4 text-green-400"></i> NLP</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-sm text-slate-300 flex items-center gap-2"><i data-lucide="line-chart" class="w-4 h-4 text-green-400"></i> Time-Series Analysis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-contact" class="view-section hidden-view max-w-2xl mx-auto">
+                <div class="glass-panel p-8 rounded-xl">
+                    <h2 class="text-2xl font-bold mb-6 text-slate-100 flex items-center gap-2">
+                        <i data-lucide="send" class="text-orange-400"></i> Initiate Sequence
+                    </h2>
+                    <form action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST" class="space-y-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="space-y-2">
+                                <label class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Your Name</label>
+                                <input type="text" name="name" required class="w-full bg-slate-900/50 border border-slate-700 rounded p-3 text-slate-200 focus:border-orange-500 focus:outline-none transition-colors" placeholder="Enter identifier">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Your Email</label>
+                                <input type="email" name="email" required class="w-full bg-slate-900/50 border border-slate-700 rounded p-3 text-slate-200 focus:border-orange-500 focus:outline-none transition-colors" placeholder="Enter return address">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Message</label>
+                            <textarea name="message" rows="4" required class="w-full bg-slate-900/50 border border-slate-700 rounded p-3 text-slate-200 focus:border-orange-500 focus:outline-none transition-colors" placeholder="Enter transmission data..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,88,12,0.4)]">
+                            <i data-lucide="upload-cloud" class="w-4 h-4"></i> SEND TRANSMISSION
+                        </button>
+                    </form>
+                    
+                    <div class="mt-8 flex justify-center gap-8 border-t border-slate-800 pt-8">
+                        <a href="https://github.com/Sriramdayal" target="_blank" class="text-slate-400 hover:text-white transition-colors flex flex-col items-center gap-1 text-xs">
+                            <i data-lucide="github" class="w-6 h-6"></i> GitHub
+                        </a>
+                        <a href="https://linkedin.com/in/ramachandradayalk" target="_blank" class="text-slate-400 hover:text-white transition-colors flex flex-col items-center gap-1 text-xs">
+                            <i data-lucide="linkedin" class="w-6 h-6"></i> LinkedIn
+                        </a>
+                        <a href="https://black279-jarvis.hf.space/" target="_blank" class="text-slate-400 hover:text-white transition-colors flex flex-col items-center gap-1 text-xs">
+                            <i data-lucide="bot" class="w-6 h-6"></i> Jarvis AI
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
 
     <script>
-        // Initialize Lucide icons
+        // --- INITIALIZATION ---
         lucide.createIcons();
 
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        // Close mobile menu when a link is clicked
-        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        // --- VIEW NAVIGATION ---
+        function switchView(viewName) {
+            // Reset nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-cyan-500/10', 'text-cyan-400', 'border-cyan-500/20');
+                btn.classList.add('text-slate-500');
             });
+            
+            // Highlight active button
+            const activeBtn = document.getElementById(`nav-${viewName}`);
+            if(activeBtn) {
+                activeBtn.classList.add('bg-cyan-500/10', 'text-cyan-400', 'border-cyan-500/20');
+                activeBtn.classList.remove('text-slate-500');
+            }
+
+            // Update Header
+            const titles = {
+                'terminal': 'TERMINAL_MODULE',
+                'projects': 'PROJECT_INDEX',
+                'skills': 'CAPABILITIES_MATRIX',
+                'contact': 'UPLINK_STATION'
+            };
+            const titleEl = document.getElementById('header-title');
+            titleEl.innerHTML = `<span class="animate-pulse">_</span> ${titles[viewName]}`;
+
+            // Transition Views
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.remove('fade-enter-active');
+                el.classList.add('hidden-view');
+            });
+
+            const target = document.getElementById(`view-${viewName}`);
+            target.classList.remove('hidden-view');
+            target.classList.add('fade-enter');
+            void target.offsetWidth; // force reflow
+            target.classList.add('fade-enter-active');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu-overlay');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        // --- TERMINAL LOGIC ---
+        const terminalInput = document.getElementById('terminal-input');
+        const terminalOutput = document.getElementById('terminal-output');
+
+        const commands = {
+            'help': 'Available commands: <span class="text-cyan-400">whoami</span>, <span class="text-cyan-400">about</span>, <span class="text-cyan-400">projects</span>, <span class="text-cyan-400">skills</span>, <span class="text-cyan-400">contact</span>, <span class="text-cyan-400">clear</span>',
+            'whoami': 'Ramachandra Dayal K. // AI Engineer based in Chennai, India.',
+            'about': 'I enjoy the full journey: cleaning chaotic data, building pipelines that actually run, and watching models make sense of the world in real time. To me, AI isn’t about hype — it’s about curiosity and precision.',
+            'projects': 'Loading Project Index...',
+            'skills': 'Analyzing Neural Pathways...',
+            'contact': 'Initiating Uplink Protocol...',
+        };
+
+        terminalInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const input = this.value.trim().toLowerCase();
+                if (input === '') return;
+
+                // User Line
+                const userLine = document.createElement('div');
+                userLine.className = 'text-cyan-400 mb-1 mt-2';
+                userLine.innerHTML = `<span class="mr-2 font-bold">➜</span>${this.value}`;
+                terminalOutput.appendChild(userLine);
+
+                // System Response
+                if (input === 'clear') {
+                    terminalOutput.innerHTML = '';
+                } else if (commands[input]) {
+                    const responseLine = document.createElement('div');
+                    responseLine.className = 'text-slate-300 mb-2';
+                    responseLine.innerHTML = commands[input];
+                    terminalOutput.appendChild(responseLine);
+
+                    // Trigger navigation
+                    if (input === 'projects') setTimeout(() => switchView('projects'), 800);
+                    if (input === 'skills') setTimeout(() => switchView('skills'), 800);
+                    if (input === 'contact') setTimeout(() => switchView('contact'), 800);
+                } else {
+                    const errorLine = document.createElement('div');
+                    errorLine.className = 'text-red-400 mb-2';
+                    errorLine.innerText = `Error: Command '${input}' not recognized.`;
+                    terminalOutput.appendChild(errorLine);
+                }
+
+                this.value = '';
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
         });
 
-        // Theme Toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
-        const sunIcon = document.getElementById('theme-icon-sun');
-        const moonIcon = document.getElementById('theme-icon-moon');
-        const sunIconMobile = document.getElementById('theme-icon-sun-mobile');
-        const moonIconMobile = document.getElementById('theme-icon-moon-mobile');
-        const themeTextMobile = document.getElementById('theme-text-mobile');
+        // --- LIVE SIMULATION (Stats & Clock) ---
+        setInterval(() => {
+            document.getElementById('system-clock').innerText = new Date().toLocaleTimeString();
+        }, 1000);
 
-        const applyTheme = (theme) => {
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-                sunIcon.classList.add('hidden');
-                moonIcon.classList.remove('hidden');
-                sunIconMobile.classList.add('hidden');
-                moonIconMobile.classList.remove('hidden');
-                themeTextMobile.textContent = 'Switch to Light Mode';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-                sunIcon.classList.remove('hidden');
-                moonIcon.classList.add('hidden');
-                sunIconMobile.classList.remove('hidden');
-                moonIconMobile.classList.add('hidden');
-                themeTextMobile.textContent = 'Switch to Dark Mode';
-                localStorage.setItem('theme', 'light');
-            }
-        };
+        setInterval(() => {
+            const gpu = Math.floor(Math.random() * 40) + 10;
+            const ram = Math.floor(Math.random() * 20) + 30;
+            document.getElementById('gpu-stat').innerText = `${gpu}%`;
+            document.getElementById('gpu-bar').style.width = `${gpu}%`;
+            document.getElementById('ram-stat').innerText = `${ram}%`;
+            document.getElementById('ram-bar').style.width = `${ram}%`;
+        }, 2500);
 
-        const toggleTheme = () => {
-            const currentTheme = localStorage.getItem('theme') === 'dark' ? 'light' : 'dark';
-            applyTheme(currentTheme);
-        };
-        
-        themeToggle.addEventListener('click', toggleTheme);
-        themeToggleMobile.addEventListener('click', toggleTheme);
-        
-        // Set initial theme on load
-        applyTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
-        
-        // Contact Form JavaScript has been removed as Formspree handles the submission.
+        // Initialize
+        switchView('terminal');
     </script>
+    
+    <style>
+        .tech-tag {
+            font-size: 0.65rem;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            color: #94a3b8;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(30, 41, 59, 0.5);
+        }
+    </style>
 </body>
 </html>
