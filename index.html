@@ -7,9 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- Load Configuration File -->
-    <script src="config.js"></script>
-
     <!-- Gradio Web Component Script -->
     <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.36.1/gradio.js"></script>
     
@@ -40,12 +37,17 @@
             -webkit-backdrop-filter: blur(12px); 
             border: 1px solid rgba(30, 41, 59, 0.5); 
         }
-        
-        /* Loading animation for AI */
-        .typing-dot { animation: typing 1.4s infinite ease-in-out both; }
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        /* Gradio Customization Override to match theme */
+        gradio-app {
+            --color-background-primary: transparent !important;
+            --color-background-secondary: transparent !important;
+            --color-border-primary: #1e293b !important;
+            --color-text-body: #e2e8f0 !important;
+            height: 100%;
+            width: 100%;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <!-- h-[100dvh] fixes mobile browser address bar jumping issues -->
@@ -409,21 +411,7 @@
                     <h2 class="text-xl md:text-2xl font-bold mb-6 text-slate-100 flex items-center gap-2">
                         <i data-lucide="send" class="text-orange-400"></i> Initiate Sequence
                     </h2>
-                    <!-- AI DRAFT SECTION -->
-                     <div class="mb-6 p-4 bg-slate-900/50 rounded border border-slate-700">
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="text-[10px] text-purple-400 uppercase font-bold tracking-wider flex items-center gap-1">
-                                <i data-lucide="sparkles" class="w-3 h-3"></i> AI Message Generator
-                            </label>
-                        </div>
-                        <div class="flex gap-2 flex-col md:flex-row">
-                            <input type="text" id="ai-draft-input" class="flex-1 bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-slate-300 focus:border-purple-500 focus:outline-none" placeholder="E.g., Job offer for Senior Engineer role...">
-                            <button onclick="generateDraft()" id="ai-draft-btn" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-2 rounded text-xs font-medium transition-colors whitespace-nowrap">
-                                Generate ✨
-                            </button>
-                        </div>
-                    </div>
-
+                    
                     <form action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST" class="space-y-5">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div class="space-y-2">
@@ -450,12 +438,6 @@
     </main>
 
     <script>
-        // --- CONFIGURATION ---
-        // Accessing the API key from the global window.CONFIG object
-        const apiKey = (window.CONFIG && window.CONFIG.GEMINI_API_KEY) ? window.CONFIG.GEMINI_API_KEY : ""; 
-        
-        console.log("AI Status:", apiKey ? "Configured" : "Missing Key"); // Debugging Log
-
         // --- INITIALIZATION ---
         lucide.createIcons();
 
@@ -558,116 +540,16 @@
                     if (cmd === 'skills') setTimeout(() => switchView('skills'), 800);
                     if (cmd === 'contact') setTimeout(() => switchView('contact'), 800);
                 } else {
-                    // GEMINI AI FALLBACK
-                    await handleAIQuery(input);
+                    const errorLine = document.createElement('div');
+                    errorLine.className = 'text-red-400 mb-2';
+                    errorLine.innerText = `Error: Command '${input}' not recognized.`;
+                    terminalOutput.appendChild(errorLine);
                 }
 
                 this.value = '';
                 terminalOutput.scrollTop = terminalOutput.scrollHeight;
             }
         });
-
-        // --- GEMINI API INTEGRATION ---
-        
-        async function handleAIQuery(prompt) {
-            // 1. Show Loading State
-            const loadingId = 'loading-' + Date.now();
-            const loadingLine = document.createElement('div');
-            loadingLine.id = loadingId;
-            loadingLine.className = 'text-slate-500 mb-2 flex items-center gap-2';
-            loadingLine.innerHTML = `> PROCESSING QUERY <div class="flex gap-1"><div class="w-1 h-1 bg-slate-500 rounded-full typing-dot"></div><div class="w-1 h-1 bg-slate-500 rounded-full typing-dot"></div><div class="w-1 h-1 bg-slate-500 rounded-full typing-dot"></div></div>`;
-            terminalOutput.appendChild(loadingLine);
-            terminalOutput.scrollTop = terminalOutput.scrollHeight;
-
-            try {
-                const response = await callGemini(prompt, "terminal");
-                
-                // Remove loading
-                document.getElementById(loadingId).remove();
-                
-                // Show Response
-                const responseLine = document.createElement('div');
-                responseLine.className = 'text-emerald-400 mb-2 font-bold';
-                // Format line breaks for terminal look
-                responseLine.innerText = `RDK-9000: ${response}`;
-                terminalOutput.appendChild(responseLine);
-                
-            } catch (error) {
-                document.getElementById(loadingId).remove();
-                const errorLine = document.createElement('div');
-                errorLine.className = 'text-red-400 mb-2';
-                errorLine.innerText = `SYSTEM ERROR: Connection to Neural Net failed.`;
-                terminalOutput.appendChild(errorLine);
-            }
-             terminalOutput.scrollTop = terminalOutput.scrollHeight;
-        }
-        
-        async function generateDraft() {
-             const input = document.getElementById('ai-draft-input').value;
-             const btn = document.getElementById('ai-draft-btn');
-             const box = document.getElementById('message-box');
-             
-             if(!input) return;
-             
-             btn.innerText = "Generating...";
-             btn.disabled = true;
-             
-             try {
-                 const draft = await callGemini(input, "email");
-                 box.value = draft;
-                 btn.innerText = "Generate ✨";
-                 btn.disabled = false;
-             } catch (e) {
-                 btn.innerText = "Error";
-                 setTimeout(() => { btn.innerText = "Generate ✨"; btn.disabled = false; }, 2000);
-             }
-        }
-
-        async function callGemini(prompt, type) {
-            let token = apiKey; // Use the constant if filled (by injection)
-            
-            // Fallback: Check LocalStorage or Ask User
-            if (!token) {
-                token = localStorage.getItem("gemini_api_key");
-            }
-            if (!token) {
-                token = window.prompt("Enter Google Gemini API Key to enable Neural Features:");
-                if (token) localStorage.setItem("gemini_api_key", token);
-            }
-            if (!token) {
-                throw new Error("Access Denied. API Key required for Neural Link.");
-            }
-
-            let systemInstruction = "";
-            if (type === "terminal") {
-                systemInstruction = "You are RDK-9000, a portfolio mainframe assistant for Ramachandra Dayal K, an AI Engineer. You speak in a concise, cyberpunk, technical style. Keep responses short (under 50 words) and formatted like a terminal log. If asked about skills, mention Python, PyTorch, and CV.";
-            } else {
-                systemInstruction = "You are a professional email drafting assistant. Generate a polite, concise, and professional message body based on the user's intent. Do not include subject lines.";
-            }
-
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${token}`;
-            
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: systemInstruction }] }
-            };
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!response.ok) throw new Error('API Error');
-                
-                const data = await response.json();
-                return data.candidates[0].content.parts[0].text.trim();
-            } catch (error) {
-                console.error(error);
-                throw error;
-            }
-        }
 
         // --- LIVE SIMULATION (Stats & Clock) ---
         setInterval(() => {
