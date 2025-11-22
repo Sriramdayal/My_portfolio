@@ -7,7 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- REMOVED: The Gradio JS script causing CSS errors is no longer needed -->
+    <!-- Load Configuration File -->
+    <script src="config.js"></script>
+
+    <!-- Gradio Web Component Script -->
+    <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.36.1/gradio.js"></script>
     
     <style>
         /* Custom Scrollbar for Cyberpunk feel */
@@ -447,8 +451,11 @@
 
     <script>
         // --- CONFIGURATION ---
-        const apiKey = ""; // System provides this at runtime
+        // Accessing the API key from the global window.CONFIG object
+        const apiKey = (window.CONFIG && window.CONFIG.GEMINI_API_KEY) ? window.CONFIG.GEMINI_API_KEY : ""; 
         
+        console.log("AI Status:", apiKey ? "Configured" : "Missing Key"); // Debugging Log
+
         // --- INITIALIZATION ---
         lucide.createIcons();
 
