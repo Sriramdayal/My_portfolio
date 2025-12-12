@@ -84,17 +84,66 @@
 
         /* Loading Spinner */
         .spinner {
-            border: 2px solid rgba(6, 182, 212, 0.2);
-            border-top-color: #06b6d4;
+            border: 2px solid rgba(236, 72, 153, 0.2);
+            border-top-color: #ec4899;
             border-radius: 50%;
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             animation: spin 0.8s linear infinite;
             display: inline-block;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        /* Chat Message Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-animate {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ec4899;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(-8px);
+            }
         }
     </style>
 </head>
@@ -227,17 +276,13 @@
                             <div class="text-slate-500">// Initializing System...</div>
                             <div class="text-slate-500">// Loading Bio-Metrics... OK</div>
                             <div class="text-slate-300">Welcome to the portfolio of <span class="text-cyan-400 font-bold">Ramachandra Dayal K</span>.</div>
-                            <div class="text-slate-300">Specialization: <span class="text-purple-400">Computer Vision & NLP</span> | <span class="text-green-400">Edge AI</span></div>
+                            <div class="text-slate-300">Specialization: <span class="text-purple-400">Computer Vision & NLP</span>.</div>
                             <br>
                             <div class="text-yellow-500 border-l-2 border-yellow-500 pl-2 italic opacity-80 text-xs md:text-sm">
                                 "I enjoy the full journey: cleaning chaotic data, building pipelines that actually run, and watching models make sense of the world in real time."
                             </div>
                             <br>
-                            <div class="text-slate-400">Current Status: <span class="text-emerald-400">Final-year AI/ML student @ SRM University</span></div>
-                            <div class="text-slate-400">Seeking: <span class="text-emerald-400">Full-time AI Engineering roles (May 2025)</span></div>
-                            <br>
-                            <div class="text-cyan-600">Type '<span class="text-cyan-400 font-bold">help</span>' for available commands</div>
-                            <div class="text-cyan-600">Try '<span class="text-pink-400 font-bold">ai &lt;question&gt;</span>' to chat with JARVIS AI</div>
+                            <div class="text-cyan-600">Type 'help'</div>
                         </div>
 
                         <!-- Input Line -->
@@ -252,12 +297,12 @@
                 </div>
             </div>
 
-            <!-- VIEW: PROJECTS -->
+            <!-- VIEW: PROJECTS (ORIGINAL DESCRIPTIONS) -->
             <div id="view-projects" class="view-section hidden-view max-w-6xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     
                     <!-- Project 1 -->
-                    <article class="project-card group glass-panel p-5 md:p-6 rounded-xl relative overflow-hidden hover:border-cyan-500/50 transition-colors duration-300">
+                    <div class="group glass-panel p-5 md:p-6 rounded-xl relative overflow-hidden hover:border-cyan-500/50 transition-colors duration-300">
                         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity pointer-events-none">
                             <i data-lucide="eye" class="w-24 h-24 text-cyan-400"></i>
                         </div>
@@ -265,51 +310,35 @@
                             <h3 class="text-lg md:text-xl font-bold text-slate-100 group-hover:text-cyan-400 transition-colors">Player Re-Identification</h3>
                             <span class="px-2 py-1 rounded text-[10px] font-bold bg-cyan-900/30 text-cyan-400 border border-cyan-800 uppercase whitespace-nowrap">Computer Vision</span>
                         </div>
-                        
-                        <!-- Metrics -->
-                        <div class="flex gap-2 mb-3 relative z-10">
-                            <span class="metric-badge text-[10px] px-2 py-1 bg-emerald-900/30 text-emerald-400 border border-emerald-700 rounded font-mono">94% mAP</span>
-                            <span class="metric-badge text-[10px] px-2 py-1 bg-blue-900/30 text-blue-400 border border-blue-700 rounded font-mono">28ms/frame</span>
-                        </div>
-                        
                         <p class="text-slate-400 mb-4 text-sm leading-relaxed relative z-10">
-                            End-to-end pipeline for detecting, tracking, and re-identifying football players across multiple camera angles using YOLOv8, TorchReID, and PaddleOCR. Achieved 94% mAP on MOT17 benchmark with real-time inference at 28ms per frame.
+                            Pipeline to detect, track, and re-identify football players using YOLOv8 and TorchReID with OCR integration.
                         </p>
                         <div class="flex flex-wrap gap-2 mt-auto relative z-10 mb-4">
                             <span class="tech-tag">YOLOv8</span>
                             <span class="tech-tag">TorchReID</span>
                             <span class="tech-tag">OCR</span>
-                            <span class="tech-tag">OpenCV</span>
                         </div>
                         <a href="https://github.com/Sriramdayal/Re_identification" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm text-cyan-500 hover:text-cyan-300 transition-colors relative z-10 p-1">
                             <i data-lucide="github" class="w-4 h-4 mr-2"></i> View Source
                         </a>
-                    </article>
+                    </div>
 
                     <!-- Project 2: Unsloth -->
-                    <article class="project-card group glass-panel p-5 md:p-6 rounded-xl relative overflow-hidden hover:border-blue-500/50 transition-colors duration-300">
+                    <div class="group glass-panel p-5 md:p-6 rounded-xl relative overflow-hidden hover:border-blue-500/50 transition-colors duration-300">
                         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity pointer-events-none">
                             <i data-lucide="zap" class="w-24 h-24 text-blue-400"></i>
                         </div>
                         <div class="flex justify-between items-start mb-4 relative z-10">
-                            <h3 class="text-lg md:text-xl font-bold text-slate-100 group-hover:text-blue-400 transition-colors">Qwen LeetCoder</h3>
+                            <h3 class="text-lg md:text-xl font-bold text-slate-100 group-hover:text-blue-400 transition-colors">Finetuned Qwen (Unsloth)</h3>
                             <span class="px-2 py-1 rounded text-[10px] font-bold bg-blue-900/30 text-blue-400 border border-blue-800 uppercase whitespace-nowrap">LLM Fine-tuning</span>
                         </div>
-                        
-                        <!-- Metrics -->
-                        <div class="flex gap-2 mb-3 relative z-10">
-                            <span class="metric-badge text-[10px] px-2 py-1 bg-emerald-900/30 text-emerald-400 border border-emerald-700 rounded font-mono">23% Accuracy ↑</span>
-                            <span class="metric-badge text-[10px] px-2 py-1 bg-purple-900/30 text-purple-400 border border-purple-700 rounded font-mono">2.5B params</span>
-                        </div>
-                        
                         <p class="text-slate-400 mb-4 text-sm leading-relaxed relative z-10">
-                            Fine-tuned Qwen2.5-Coder-0.5B-Instruct on 15K+ LeetCode problems using Unsloth's memory-optimized LoRA. Improved code generation accuracy by 23% on medium-difficulty problems with 4-bit quantization for edge deployment.
+                            Fine-tuned Qwen model for LeetCode competitive programming using Unsloth for optimized training.
                         </p>
                         <div class="flex flex-wrap gap-2 mt-auto relative z-10 mb-4">
                             <span class="tech-tag">Unsloth</span>
-                            <span class="tech-tag">Qwen2.5</span>
-                            <span class="tech-tag">LoRA</span>
-                            <span class="tech-tag">4-bit Quant</span>
+                            <span class="tech-tag">Qwen</span>
+                            <span class="tech-tag">Hugging Face</span>
                         </div>
                         <div class="flex gap-4 relative z-10 flex-wrap">
                             <a href="https://huggingface.co/black279/Qwen_LeetCoder" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm text-blue-500 hover:text-blue-300 transition-colors p-1">
@@ -319,10 +348,10 @@
                                 <i data-lucide="github" class="w-4 h-4 mr-2"></i> Code
                             </a>
                         </div>
-                    </article>
+                    </div>
 
                     <!-- Project 3 -->
-                    <article class="project-card group glass-panel p-5 md:p-6 rounded-xl relative overflow-hidden hover:border-purple-500/50 transition-colors duration-300">
+                    <div class="group glass-panel p-5 md:p-6 rounded-xl relative overflow-hidden hover:border-purple-500/50 transition-colors duration-300">
                         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity pointer-events-none">
                             <i data-lucide="activity" class="w-24 h-24 text-purple-400"></i>
                         </div>
@@ -330,29 +359,20 @@
                             <h3 class="text-lg md:text-xl font-bold text-slate-100 group-hover:text-purple-400 transition-colors">Exercise Recognition</h3>
                             <span class="px-2 py-1 rounded text-[10px] font-bold bg-purple-900/30 text-purple-400 border border-purple-800 uppercase whitespace-nowrap">Machine Learning</span>
                         </div>
-                        
-                        <!-- Metrics -->
-                        <div class="flex gap-2 mb-3 relative z-10">
-                            <span class="metric-badge text-[10px] px-2 py-1 bg-emerald-900/30 text-emerald-400 border border-emerald-700 rounded font-mono">96% F1-Score</span>
-                            <span class="metric-badge text-[10px] px-2 py-1 bg-yellow-900/30 text-yellow-400 border border-yellow-700 rounded font-mono">Real-time</span>
-                        </div>
-                        
                         <p class="text-slate-400 mb-4 text-sm leading-relaxed relative z-10">
-                            ML pipeline for classifying barbell exercises and counting repetitions from MetaMotion sensor data. Achieved 96% F1-score using Random Forest with engineered time-series features and Kalman filtering for noise reduction.
+                            ML models to classify barbell exercises and count repetitions from MetaMotion sensor data.
                         </p>
                         <div class="flex flex-wrap gap-2 mt-auto relative z-10 mb-4">
                             <span class="tech-tag">Scikit-Learn</span>
                             <span class="tech-tag">Time-Series</span>
-                            <span class="tech-tag">Kalman Filter</span>
-                            <span class="tech-tag">Random Forest</span>
                         </div>
                         <a href="https://colab.research.google.com/drive/13zKf7evJWQWiJlykDDfOb9zzVqVEu_9f?usp=sharing&pli=1&authuser=3" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm text-purple-500 hover:text-purple-300 transition-colors relative z-10 p-1">
                             <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> View Notebook
                         </a>
-                    </article>
+                    </div>
 
                     <!-- Project 4 -->
-                    <article class="project-card group glass-panel p-5 md:p-6 rounded-xl relative overflow-hidden hover:border-green-500/50 transition-colors duration-300">
+                    <div class="group glass-panel p-5 md:p-6 rounded-xl relative overflow-hidden hover:border-green-500/50 transition-colors duration-300">
                         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity pointer-events-none">
                             <i data-lucide="git-branch" class="w-24 h-24 text-green-400"></i>
                         </div>
@@ -360,27 +380,20 @@
                             <h3 class="text-lg md:text-xl font-bold text-slate-100 group-hover:text-green-400 transition-colors">SEAL–BDH Architecture</h3>
                             <span class="px-2 py-1 rounded text-[10px] font-bold bg-green-900/30 text-green-400 border border-green-800 uppercase whitespace-nowrap">Research</span>
                         </div>
-                        
-                        <!-- Metrics -->
-                        <div class="flex gap-2 mb-3 relative z-10">
-                            <span class="metric-badge text-[10px] px-2 py-1 bg-blue-900/30 text-blue-400 border border-blue-700 rounded font-mono">Novel Architecture</span>
-                        </div>
-                        
                         <p class="text-slate-400 mb-4 text-sm leading-relaxed relative z-10">
-                            Hybrid simulation exploring adaptive self-improvement mechanisms combined with biologically-inspired neural dynamics. Implements novel feedback loops for continuous learning in dynamic environments.
+                            Hybrid simulation exploring adaptive self-improvement and biologically inspired neural dynamics.
                         </p>
                         <div class="flex flex-wrap gap-2 mt-auto relative z-10 mb-4">
                             <span class="tech-tag">Adaptive Learning</span>
                             <span class="tech-tag">Bio-Inspired</span>
-                            <span class="tech-tag">PyTorch</span>
                         </div>
                         <a href="https://github.com/Sriramdayal/Hybrid_BDH-SEAL" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm text-green-500 hover:text-green-300 transition-colors relative z-10 p-1">
                             <i data-lucide="github" class="w-4 h-4 mr-2"></i> View Repo
                         </a>
-                    </article>
+                    </div>
                     
                     <!-- Project 5 -->
-                    <article class="project-card group glass-panel p-5 md:p-6 rounded-xl relative overflow-hidden hover:border-orange-500/50 transition-colors duration-300">
+                    <div class="group glass-panel p-5 md:p-6 rounded-xl relative overflow-hidden hover:border-orange-500/50 transition-colors duration-300">
                         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity pointer-events-none">
                             <i data-lucide="box" class="w-24 h-24 text-orange-400"></i>
                         </div>
@@ -388,43 +401,91 @@
                             <h3 class="text-lg md:text-xl font-bold text-slate-100 group-hover:text-orange-400 transition-colors">Py-Easy-Env</h3>
                             <span class="px-2 py-1 rounded text-[10px] font-bold bg-orange-900/30 text-orange-400 border border-orange-800 uppercase whitespace-nowrap">Dev Tooling</span>
                         </div>
-                        
-                        <!-- Metrics -->
-                        <div class="flex gap-2 mb-3 relative z-10">
-                            <span class="metric-badge text-[10px] px-2 py-1 bg-cyan-900/30 text-cyan-400 border border-cyan-700 rounded font-mono">Open Source</span>
-                        </div>
-                        
                         <p class="text-slate-400 mb-4 text-sm leading-relaxed relative z-10">
-                            Cross-platform GUI tool for managing Python virtual environments and dependencies. Abstracts complex CLI workflows into an intuitive interface, supporting pip, conda, and poetry workflows with one-click setup.
+                            Modern GUI for managing Python project dependencies, abstracting complex CLI workflows.
                         </p>
                         <div class="flex flex-wrap gap-2 mt-auto relative z-10 mb-4">
                             <span class="tech-tag">Python</span>
                             <span class="tech-tag">GUI</span>
-                            <span class="tech-tag">DevTools</span>
                         </div>
                         <a href="https://github.com/Sriramdayal/py-easy-env-manager" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm text-orange-500 hover:text-orange-300 transition-colors relative z-10 p-1">
                             <i data-lucide="github" class="w-4 h-4 mr-2"></i> View Tool
                         </a>
-                    </article>
+                    </div>
                 </div>
             </div>
 
-            <!-- VIEW: DEMO (NEURAL LINK) -->
-            <div id="view-demo" class="view-section hidden-view h-full max-w-6xl mx-auto flex flex-col">
-                <div class="glass-panel p-1 rounded-xl h-full flex flex-col shadow-[0_0_30px_rgba(236,72,153,0.2)] border-pink-500/30 h-[80dvh] md:h-full min-h-[500px]">
-                    <div class="bg-slate-950/90 rounded-lg flex-1 overflow-hidden relative">
-                        <div class="absolute top-2 right-2 z-10 flex items-center gap-2 px-3 py-1 bg-slate-900/80 rounded-full border border-pink-500/30 text-xs text-pink-400">
-                            <span class="w-2 h-2 bg-pink-500 rounded-full animate-pulse"></span>
-                            LIVE
+            <!-- VIEW: DEMO (CUSTOM CHAT INTERFACE) -->
+            <div id="view-demo" class="view-section hidden-view h-full max-w-4xl mx-auto flex flex-col">
+                <div class="glass-panel rounded-xl h-full flex flex-col shadow-[0_0_30px_rgba(236,72,153,0.2)] border-pink-500/30 h-[80dvh] md:h-full min-h-[500px]">
+                    
+                    <!-- Chat Header -->
+                    <div class="bg-slate-900/90 border-b border-pink-500/20 px-4 md:px-6 py-3 rounded-t-xl flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-[0_0_20px_rgba(236,72,153,0.5)]">
+                                <i data-lucide="bot" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-100 text-sm md:text-base">JARVIS Neural Interface</h3>
+                                <p class="text-xs text-pink-400 flex items-center gap-1">
+                                    <span class="w-2 h-2 bg-pink-500 rounded-full animate-pulse"></span>
+                                    <span id="connection-status">Connected</span>
+                                </p>
+                            </div>
                         </div>
-                        <iframe 
-                            src="https://black279-jarvis.hf.space" 
-                            loading="lazy"
-                            class="w-full h-full border-0 rounded-lg bg-transparent"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                            title="JARVIS AI Assistant - Live Demo"
-                        ></iframe>
+                        
+                        <!-- Model Selector -->
+                        <div class="hidden md:block">
+                            <select id="model-selector" class="bg-slate-800 border border-slate-700 text-slate-300 text-xs px-3 py-1.5 rounded focus:outline-none focus:border-pink-500">
+                                <option value="baidu/ERNIE-4.5-21B-A3B-PT">ERNIE-4.5</option>
+                                <option value="moonshotai/Kimi-K2-Thinking">Kimi-K2</option>
+                                <option value="deepseek-ai/DeepSeek-V3">DeepSeek-V3</option>
+                                <option value="Qwen/QwQ-32B-Preview">Qwen-QwQ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Chat Messages -->
+                    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 bg-slate-950/80 scroll-smooth">
+                        <!-- Welcome Message -->
+                        <div class="flex gap-3 message-animate">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shrink-0">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="bg-slate-800/50 border border-pink-500/20 rounded-lg p-3 md:p-4">
+                                    <p class="text-slate-300 text-sm md:text-base">
+                                        Welcome to JARVIS Neural Interface. I'm powered by multiple state-of-the-art LLMs. How can I assist you today?
+                                    </p>
+                                </div>
+                                <span class="text-xs text-slate-500 mt-1 block">JARVIS • Just now</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div class="bg-slate-900/90 border-t border-pink-500/20 p-3 md:p-4 rounded-b-xl">
+                        <div class="flex gap-2 md:gap-3">
+                            <input 
+                                type="text" 
+                                id="chat-input" 
+                                placeholder="Ask JARVIS anything..." 
+                                class="flex-1 bg-slate-800 border border-slate-700 text-slate-200 px-3 md:px-4 py-2 md:py-3 rounded-lg text-sm md:text-base focus:outline-none focus:border-pink-500 transition-colors"
+                                autocomplete="off"
+                            >
+                            <button 
+                                id="send-button" 
+                                class="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-medium transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:shadow-[0_0_30px_rgba(236,72,153,0.5)] disabled:opacity-50 disabled:cursor-not-allowed"
+                                aria-label="Send message"
+                            >
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span class="hidden md:inline">Send</span>
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-2 flex items-center gap-1">
+                            <i data-lucide="info" class="w-3 h-3"></i>
+                            Press Enter to send • Shift+Enter for new line
+                        </p>
                     </div>
                 </div>
             </div>
@@ -451,10 +512,6 @@
                                 <div class="flex justify-between text-xs text-slate-400 mb-1"><span>SQL</span><span>85%</span></div>
                                 <div class="h-1.5 bg-slate-700 rounded-full"><div class="h-full bg-cyan-500 rounded-full opacity-80" style="width: 85%"></div></div>
                             </div>
-                            <div>
-                                <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Bash / Shell</span><span>78%</span></div>
-                                <div class="h-1.5 bg-slate-700 rounded-full"><div class="h-full bg-cyan-500 rounded-full opacity-70" style="width: 78%"></div></div>
-                            </div>
                         </div>
                     </div>
                     <!-- Category 2 -->
@@ -476,10 +533,6 @@
                                 <div class="flex justify-between text-xs text-slate-400 mb-1"><span>OpenCV / Scikit-learn</span><span>88%</span></div>
                                 <div class="h-1.5 bg-slate-700 rounded-full"><div class="h-full bg-purple-500 rounded-full opacity-90" style="width: 88%"></div></div>
                             </div>
-                            <div>
-                                <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Hugging Face / Unsloth</span><span>85%</span></div>
-                                <div class="h-1.5 bg-slate-700 rounded-full"><div class="h-full bg-purple-500 rounded-full opacity-80" style="width: 85%"></div></div>
-                            </div>
                         </div>
                     </div>
                     
@@ -487,69 +540,21 @@
                     <div class="glass-panel p-5 md:p-6 rounded-xl md:col-span-2">
                         <div class="flex items-center gap-3 mb-4">
                             <i data-lucide="brain-circuit" class="text-green-400"></i>
-                            <h3 class="text-lg font-bold text-slate-200">Domains & Specializations</h3>
+                            <h3 class="text-lg font-bold text-slate-200">Domains</h3>
                         </div>
                         <div class="flex flex-wrap gap-3">
-                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-xs md:text-sm text-slate-300 flex items-center gap-2 hover:border-cyan-500 transition-colors cursor-default">
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-xs md:text-sm text-slate-300 flex items-center gap-2">
                                 <i data-lucide="eye" class="w-4 h-4 text-green-400"></i> Computer Vision
                             </span>
-                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-xs md:text-sm text-slate-300 flex items-center gap-2 hover:border-cyan-500 transition-colors cursor-default">
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-xs md:text-sm text-slate-300 flex items-center gap-2">
                                 <i data-lucide="message-square" class="w-4 h-4 text-green-400"></i> NLP / LLMs
                             </span>
-                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-xs md:text-sm text-slate-300 flex items-center gap-2 hover:border-cyan-500 transition-colors cursor-default">
-                                <i data-lucide="line-chart" class="w-4 h-4 text-green-400"></i> Time-Series Analysis
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-xs md:text-sm text-slate-300 flex items-center gap-2">
+                                <i data-lucide="line-chart" class="w-4 h-4 text-green-400"></i> Time-Series
                             </span>
-                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-xs md:text-sm text-slate-300 flex items-center gap-2 hover:border-cyan-500 transition-colors cursor-default">
-                                <i data-lucide="cpu" class="w-4 h-4 text-green-400"></i> Edge AI & Deployment
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-xs md:text-sm text-slate-300 flex items-center gap-2">
+                                <i data-lucide="cpu" class="w-4 h-4 text-green-400"></i> Edge AI
                             </span>
-                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-xs md:text-sm text-slate-300 flex items-center gap-2 hover:border-cyan-500 transition-colors cursor-default">
-                                <i data-lucide="zap" class="w-4 h-4 text-green-400"></i> Model Optimization
-                            </span>
-                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded text-xs md:text-sm text-slate-300 flex items-center gap-2 hover:border-cyan-500 transition-colors cursor-default">
-                                <i data-lucide="database" class="w-4 h-4 text-green-400"></i> MLOps / Pipelines
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <!-- Category 4: Tools & Platforms -->
-                    <div class="glass-panel p-5 md:p-6 rounded-xl md:col-span-2">
-                        <div class="flex items-center gap-3 mb-4">
-                            <i data-lucide="wrench" class="text-orange-400"></i>
-                            <h3 class="text-lg font-bold text-slate-200">Tools & Platforms</h3>
-                        </div>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm text-slate-300">
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="git-branch" class="w-4 h-4 text-orange-400"></i>
-                                <span>Git / GitHub</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="docker" class="w-4 h-4 text-orange-400"></i>
-                                <span>Docker</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="cloud" class="w-4 h-4 text-orange-400"></i>
-                                <span>AWS / GCP</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="terminal" class="w-4 h-4 text-orange-400"></i>
-                                <span>Linux / Bash</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="database" class="w-4 h-4 text-orange-400"></i>
-                                <span>PostgreSQL / MongoDB</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="box" class="w-4 h-4 text-orange-400"></i>
-                                <span>ONNX / TFLite</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="share-2" class="w-4 h-4 text-orange-400"></i>
-                                <span>Gradio / Streamlit</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="workflow" class="w-4 h-4 text-orange-400"></i>
-                                <span>MLflow / W&B</span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -558,121 +563,252 @@
             <!-- VIEW: CONTACT -->
             <div id="view-contact" class="view-section hidden-view max-w-2xl mx-auto">
                 <div class="glass-panel p-6 md:p-8 rounded-xl">
-                    <h2 class="text-xl md:text-2xl font-bold mb-2 text-slate-100 flex items-center gap-2">
-                        <i data-lucide="send" class="text-orange-400"></i> Initiate Communication Sequence
+                    <h2 class="text-xl md:text-2xl font-bold mb-6 text-slate-100 flex items-center gap-2">
+                        <i data-lucide="send" class="text-orange-400"></i> Initiate Sequence
                     </h2>
-                    <p class="text-sm text-slate-400 mb-6">Available for full-time AI Engineering roles starting May 2025</p>
                     
-                    <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-5">
+                    <form action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST" class="space-y-5">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div class="space-y-2">
-                                <label for="contact-name" class="text-xs text-slate-500 uppercase font-bold tracking-wider">Your Name</label>
-                                <input type="text" id="contact-name" name="name" required class="w-full bg-slate-900/50 border border-slate-700 rounded p-3 text-sm text-slate-200 focus:border-orange-500 focus:outline-none transition-colors" placeholder="Enter identifier" aria-required="true">
+                                <label class="text-xs text-slate-500 uppercase font-bold tracking-wider">Your Name</label>
+                                <input type="text" name="name" required class="w-full bg-slate-900/50 border border-slate-700 rounded p-3 text-sm text-slate-200 focus:border-orange-500 focus:outline-none transition-colors" placeholder="Enter identifier">
                             </div>
                             <div class="space-y-2">
-                                <label for="contact-email" class="text-xs text-slate-500 uppercase font-bold tracking-wider">Your Email</label>
-                                <input type="email" id="contact-email" name="email" required class="w-full bg-slate-900/50 border border-slate-700 rounded p-3 text-sm text-slate-200 focus:border-orange-500 focus:outline-none transition-colors" placeholder="Enter return address" aria-required="true">
+                                <label class="text-xs text-slate-500 uppercase font-bold tracking-wider">Your Email</label>
+                                <input type="email" name="email" required class="w-full bg-slate-900/50 border border-slate-700 rounded p-3 text-sm text-slate-200 focus:border-orange-500 focus:outline-none transition-colors" placeholder="Enter return address">
                             </div>
                         </div>
                         <div class="space-y-2">
-                            <label for="message-box" class="text-xs text-slate-500 uppercase font-bold tracking-wider">Message</label>
-                            <textarea id="message-box" name="message" rows="4" required class="w-full bg-slate-900/50 border border-slate-700 rounded p-3 text-sm text-slate-200 focus:border-orange-500 focus:outline-none transition-colors resize-none" placeholder="Enter transmission data..." aria-required="true"></textarea>
+                            <label class="text-xs text-slate-500 uppercase font-bold tracking-wider">Message</label>
+                            <textarea id="message-box" name="message" rows="4" required class="w-full bg-slate-900/50 border border-slate-700 rounded p-3 text-sm text-slate-200 focus:border-orange-500 focus:outline-none transition-colors" placeholder="Enter transmission data..."></textarea>
                         </div>
-                        
-                        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-                        
-                        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,88,12,0.4)] hover:shadow-[0_0_25px_rgba(234,88,12,0.6)]" aria-label="Send message">
+                        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,88,12,0.4)]">
                             <i data-lucide="upload-cloud" class="w-4 h-4"></i> SEND TRANSMISSION
                         </button>
                     </form>
-                    
-                    <div class="mt-8 pt-6 border-t border-slate-700">
-                        <p class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-3">Direct Channels</p>
-                        <div class="flex flex-wrap gap-3">
-                            <a href="mailto:ramachandradayalk@gmail.com" class="flex items-center gap-2 px-4 py-2 bg-slate-800 border border-slate-700 rounded text-sm text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors">
-                                <i data-lucide="mail" class="w-4 h-4"></i> Email
-                            </a>
-                            <a href="https://linkedin.com/in/ramachandradayalk" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 bg-slate-800 border border-slate-700 rounded text-sm text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors">
-                                <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
-                            </a>
-                            <a href="https://github.com/Sriramdayal" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 bg-slate-800 border border-slate-700 rounded text-sm text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors">
-                                <i data-lucide="github" class="w-4 h-4"></i> GitHub
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
 
         </div>
     </main>
 
-    <script type="module">
-        // --- GRADIO AI CLIENT ---
-        import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/+esm";
-        
-        class JarvisAI {
+    <script>
+        // --- GRADIO REST API CLIENT ---
+        class JarvisAPI {
             constructor() {
-                this.client = null;
-                this.isConnecting = false;
+                this.baseURL = "https://black279-jarvis.hf.space";
+                this.isProcessing = false;
             }
-            
-            async connect() {
-                if (this.client) return this.client;
-                if (this.isConnecting) return null;
-                
-                this.isConnecting = true;
-                try {
-                    this.client = await Client.connect("black279/jarvis");
-                    console.log("✅ Connected to JARVIS");
-                    return this.client;
-                } catch (error) {
-                    console.error("❌ Connection failed:", error);
-                    throw error;
-                } finally {
-                    this.isConnecting = false;
-                }
-            }
-            
+
             async chat(message, options = {}) {
-                if (!this.client) {
-                    await this.connect();
-                }
-                
-                const params = {
-                    message: message,
-                    system_message: options.system || "You are a helpful AI assistant.",
-                    max_tokens: options.maxTokens || 2048,
-                    temperature: options.temperature || 0.7,
-                    top_p: options.topP || 0.9,
-                    model_id: options.model || "baidu/ERNIE-4.5-21B-A3B-PT"
+                const payload = {
+                    data: [
+                        message,
+                        options.system || "You are JARVIS, a helpful AI assistant.",
+                        options.maxTokens || 2048,
+                        options.temperature || 0.7,
+                        options.topP || 0.9,
+                        options.model || "baidu/ERNIE-4.5-21B-A3B-PT"
+                    ]
                 };
-                
+
                 try {
-                    const result = await this.client.predict("/chat", params);
-                    return result.data;
+                    const response = await fetch(`${this.baseURL}/api/predict`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        return result.data[0];
+                    }
+
+                    return await this.chatWithQueue(message, options);
+
                 } catch (error) {
                     console.error("Chat error:", error);
-                    throw new Error(`AI request failed: ${error.message}`);
+                    throw new Error(`Failed to get response: ${error.message}`);
                 }
             }
+
+            async chatWithQueue(message, options = {}) {
+                const joinResponse = await fetch(`${this.baseURL}/queue/join`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        data: [
+                            message,
+                            options.system || "You are JARVIS, a helpful AI assistant.",
+                            options.maxTokens || 2048,
+                            options.temperature || 0.7,
+                            options.topP || 0.9,
+                            options.model || "baidu/ERNIE-4.5-21B-A3B-PT"
+                        ],
+                        fn_index: 0
+                    })
+                });
+
+                if (!joinResponse.ok) {
+                    throw new Error("Failed to join queue");
+                }
+
+                const { event_id } = await joinResponse.json();
+
+                for (let i = 0; i < 60; i++) {
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    const statusResponse = await fetch(`${this.baseURL}/queue/status?event_id=${event_id}`);
+                    const status = await statusResponse.json();
+
+                    if (status.status === "complete") {
+                        return status.data[0];
+                    } else if (status.status === "failed") {
+                        throw new Error("Processing failed");
+                    }
+                }
+
+                throw new Error("Request timeout");
+            }
         }
-        
-        // Initialize AI client
-        window.jarvisAI = new JarvisAI();
-        
+
+        window.jarvisAPI = new JarvisAPI();
+
+        // --- CHAT INTERFACE LOGIC ---
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendButton = document.getElementById('send-button');
+        const modelSelector = document.getElementById('model-selector');
+        const connectionStatus = document.getElementById('connection-status');
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex gap-3 message-animate';
+            
+            if (isUser) {
+                messageDiv.innerHTML = `
+                    <div class="flex-1 flex flex-col items-end">
+                        <div class="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-500/30 rounded-lg p-3 md:p-4 max-w-[85%]">
+                            <p class="text-slate-200 text-sm md:text-base">${escapeHtml(content)}</p>
+                        </div>
+                        <span class="text-xs text-slate-500 mt-1">You • Just now</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shrink-0">
+                        <i data-lucide="user" class="w-4 h-4 text-white"></i>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shrink-0">
+                        <i data-lucide="bot" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-slate-800/50 border border-pink-500/20 rounded-lg p-3 md:p-4">
+                            <p class="text-slate-300 text-sm md:text-base whitespace-pre-wrap">${escapeHtml(content)}</p>
+                        </div>
+                        <span class="text-xs text-slate-500 mt-1 block">JARVIS • Just now</span>
+                    </div>
+                `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            lucide.createIcons();
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function addTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typing-indicator';
+            typingDiv.className = 'flex gap-3 message-animate';
+            typingDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shrink-0">
+                    <i data-lucide="bot" class="w-4 h-4 text-white"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="bg-slate-800/50 border border-pink-500/20 rounded-lg p-4 inline-flex items-center gap-2">
+                        <span class="text-slate-400 text-sm">JARVIS is thinking</span>
+                        <div class="typing-indicator">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            lucide.createIcons();
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        async function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message || jarvisAPI.isProcessing) return;
+
+            addMessage(message, true);
+            chatInput.value = '';
+            
+            jarvisAPI.isProcessing = true;
+            sendButton.disabled = true;
+            chatInput.disabled = true;
+            connectionStatus.textContent = 'Processing...';
+            
+            addTypingIndicator();
+
+            try {
+                const selectedModel = modelSelector.value;
+                const response = await jarvisAPI.chat(message, {
+                    model: selectedModel,
+                    maxTokens: 2048,
+                    temperature: 0.7
+                });
+
+                removeTypingIndicator();
+                addMessage(response, false);
+                connectionStatus.textContent = 'Connected';
+
+            } catch (error) {
+                removeTypingIndicator();
+                addMessage(`Error: ${error.message}. Please try again.`, false);
+                connectionStatus.textContent = 'Error';
+                console.error('Chat error:', error);
+            } finally {
+                jarvisAPI.isProcessing = false;
+                sendButton.disabled = false;
+                chatInput.disabled = false;
+                chatInput.focus();
+            }
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
         // --- INITIALIZATION ---
         lucide.createIcons();
 
         // --- VIEW NAVIGATION ---
         window.switchView = function(viewName) {
-            // Reset nav buttons
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('bg-cyan-500/10', 'text-cyan-400', 'border-cyan-500/20');
                 btn.classList.remove('text-pink-400', 'bg-pink-500/10', 'border-pink-500/20');
                 btn.classList.add('text-slate-500');
             });
             
-            // Highlight active button
             const activeBtn = document.getElementById(`nav-${viewName}`);
             if(activeBtn) {
                 activeBtn.classList.remove('text-slate-500');
@@ -684,7 +820,6 @@
                 }
             }
 
-            // Update Header
             const titles = {
                 'terminal': 'TERMINAL_MODULE',
                 'projects': 'PROJECT_INDEX',
@@ -702,7 +837,6 @@
             
             titleEl.innerHTML = `<span class="animate-pulse">_</span> ${titles[viewName]}`;
 
-            // Transition Views
             document.querySelectorAll('.view-section').forEach(el => {
                 el.classList.remove('fade-enter-active');
                 el.classList.add('hidden-view');
@@ -711,8 +845,12 @@
             const target = document.getElementById(`view-${viewName}`);
             target.classList.remove('hidden-view');
             target.classList.add('fade-enter');
-            void target.offsetWidth; // force reflow
+            void target.offsetWidth;
             target.classList.add('fade-enter-active');
+            
+            if (viewName === 'demo') {
+                setTimeout(() => chatInput.focus(), 300);
+            }
         }
 
         window.toggleMobileMenu = function() {
@@ -726,32 +864,19 @@
         const terminalOutput = document.getElementById('terminal-output');
 
         const commands = {
-            'help': 'Available commands: <span class="text-cyan-400">whoami</span>, <span class="text-cyan-400">about</span>, <span class="text-cyan-400">projects</span>, <span class="text-pink-400">demo</span>, <span class="text-cyan-400">skills</span>, <span class="text-cyan-400">contact</span>, <span class="text-cyan-400">clear</span>, <span class="text-pink-400">ai &lt;question&gt;</span>',
-            'whoami': 'Ramachandra Dayal K // AI Engineer specializing in Computer Vision, NLP, and Edge AI',
-            'about': 'AI/ML student @ SRM University (2021-2025) | Specializing in Computer Vision & NLP | Building production ML systems with PyTorch, TensorFlow, and Hugging Face | Passionate about edge deployment and model optimization | Available for full-time AI Engineering roles from May 2025',
-            'projects': 'Loading Project Index... Fetching repository data...',
-            'demo': 'ESTABLISHING NEURAL LINK... CONNECTING TO JARVIS AI ASSISTANT...',
-            'skills': 'Analyzing Neural Pathways... Loading Capabilities Matrix...',
-            'contact': 'Initiating Uplink Protocol... Establishing Communication Channels...',
+            'help': 'Available commands: <span class="text-cyan-400">whoami</span>, <span class="text-cyan-400">about</span>, <span class="text-cyan-400">projects</span>, <span class="text-pink-400">demo</span>, <span class="text-cyan-400">skills</span>, <span class="text-cyan-400">contact</span>, <span class="text-cyan-400">clear</span>',
+            'whoami': 'Ramachandra Dayal K. // AI Engineer based in Chennai, India.',
+            'projects': 'Loading Project Index...',
+            'demo': 'ESTABLISHING NEURAL LINK... CONNECTING TO JARVIS...',
+            'skills': 'Analyzing Neural Pathways...',
+            'contact': 'Initiating Uplink Protocol...',
         };
-
-        function escapeHtml(text) {
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>"']/g, m => map[m]);
-        }
 
         terminalInput.addEventListener('keydown', async function(e) {
             if (e.key === 'Enter') {
                 const input = this.value.trim();
                 if (input === '') return;
 
-                // User Line
                 const userLine = document.createElement('div');
                 userLine.className = 'text-cyan-400 mb-1 mt-2';
                 userLine.innerHTML = `<span class="mr-2 font-bold">➜</span>${escapeHtml(input)}`;
@@ -759,52 +884,14 @@
                 
                 const cmd = input.toLowerCase();
 
-                // System Response
                 if (cmd === 'clear') {
                     terminalOutput.innerHTML = '';
-                } else if (cmd.startsWith('ai ')) {
-                    // AI Command Handler
-                    const query = input.substring(3).trim();
-                    if (!query) {
-                        const errorLine = document.createElement('div');
-                        errorLine.className = 'text-red-400 mb-2';
-                        errorLine.innerText = 'Usage: ai <question>';
-                        terminalOutput.appendChild(errorLine);
-                    } else {
-                        // Show loading indicator
-                        const loadingLine = document.createElement('div');
-                        loadingLine.className = 'text-pink-400 mb-2 flex items-center gap-2';
-                        loadingLine.innerHTML = '<div class="spinner"></div> Querying JARVIS AI...';
-                        terminalOutput.appendChild(loadingLine);
-                        
-                        try {
-                            const response = await window.jarvisAI.chat(query);
-                            
-                            // Remove loading
-                            loadingLine.remove();
-                            
-                            // Show AI response
-                            const aiResponse = document.createElement('div');
-                            aiResponse.className = 'text-green-400 mb-2 border-l-2 border-green-500 pl-3 py-1';
-                            aiResponse.innerHTML = `<span class="text-pink-400 font-bold">JARVIS:</span> ${escapeHtml(response)}`;
-                            terminalOutput.appendChild(aiResponse);
-                            
-                        } catch (error) {
-                            loadingLine.remove();
-                            
-                            const errorLine = document.createElement('div');
-                            errorLine.className = 'text-red-400 mb-2';
-                            errorLine.innerText = `AI Error: ${error.message}. Please try again.`;
-                            terminalOutput.appendChild(errorLine);
-                        }
-                    }
                 } else if (commands[cmd]) {
                     const responseLine = document.createElement('div');
                     responseLine.className = 'text-slate-300 mb-2';
                     responseLine.innerHTML = commands[cmd];
                     terminalOutput.appendChild(responseLine);
 
-                    // Trigger navigation
                     if (cmd === 'projects') setTimeout(() => switchView('projects'), 800);
                     if (cmd === 'demo') setTimeout(() => switchView('demo'), 1000);
                     if (cmd === 'skills') setTimeout(() => switchView('skills'), 800);
@@ -812,7 +899,7 @@
                 } else {
                     const errorLine = document.createElement('div');
                     errorLine.className = 'text-red-400 mb-2';
-                    errorLine.innerText = `Error: Command '${input}' not recognized. Type 'help' for available commands.`;
+                    errorLine.innerText = `Error: Command '${input}' not recognized.`;
                     terminalOutput.appendChild(errorLine);
                 }
 
@@ -821,7 +908,7 @@
             }
         });
 
-        // --- LIVE SIMULATION (Stats & Clock) ---
+        // --- LIVE SIMULATION ---
         function updateClock() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -842,12 +929,9 @@
             document.getElementById('ram-bar').style.width = `${ram}%`;
         }, 2500);
 
-        // Initialize
         switchView('terminal');
         
-        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            // Ctrl/Cmd + K to focus terminal
             if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                 e.preventDefault();
                 terminalInput.focus();
