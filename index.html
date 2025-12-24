@@ -10,69 +10,7 @@
     <!-- Gradio Web Component Script -->
     <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.36.1/gradio.js"></script>
     
-    <style>
-        /* Custom Scrollbar for Cyberpunk feel */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
-        
-        /* Hide scrollbar for Chrome, Safari and Opera on mobile for cleaner look */
-        @media (max-width: 768px) {
-            ::-webkit-scrollbar { display: none; }
-            body { -ms-overflow-style: none; scrollbar-width: none; }
-        }
-
-        /* Animations */
-        .cursor-blink { animation: blink 1s step-end infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        .fade-enter { opacity: 0; transform: translateY(10px); }
-        .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 300ms ease-out, transform 300ms ease-out; }
-        .hidden-view { display: none !important; }
-        
-        .glass-panel { 
-            background: rgba(15, 23, 42, 0.7); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px); 
-            border: 1px solid rgba(30, 41, 59, 0.5); 
-        }
-
-        /* Animations */
-        .cursor-blink { animation: blink 1s step-end infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        .fade-enter { opacity: 0; transform: translateY(10px); }
-        .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 300ms ease-out, transform 300ms ease-out; }
-        .hidden-view { display: none !important; }
-        
-        .glass-panel { 
-            background: rgba(15, 23, 42, 0.7); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px); 
-            border: 1px solid rgba(30, 41, 59, 0.5); 
-        }
-
-        /* Gradio Customization Override to match theme */
-        gradio-app {
-            --color-background-primary: transparent !important;
-            --color-background-secondary: transparent !important;
-            --color-border-primary: #1e293b !important;
-            --color-text-body: #e2e8f0 !important;
-            height: 100%;
-            width: 100%;
-            overflow-y: auto;
-        }
-
-        .tech-tag {
-            font-size: 0.65rem;
-            border: 1px solid rgba(71, 85, 105, 0.5);
-            color: #94a3b8;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: rgba(30, 41, 59, 0.5);
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <!-- h-[100dvh] fixes mobile browser address bar jumping issues -->
 <body class="bg-slate-950 text-slate-200 font-mono h-[100dvh] overflow-hidden flex selection:bg-cyan-500/30">
@@ -97,7 +35,7 @@
             <div class="p-6 flex items-center gap-4 border-b border-slate-800/50">
                 <div class="relative">
                     <div class="w-12 h-12 rounded-full bg-slate-800 overflow-hidden border-2 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-                        <img src="images/portfolio.png" onerror="this.src='https://placehold.co/128x128/0f172a/06b6d4?text=RDK'" alt="RDK" class="w-full h-full object-cover">
+                        <img src="assets/images/portfolio.png" onerror="this.src='https://placehold.co/128x128/0f172a/06b6d4?text=RDK'" alt="RDK" class="w-full h-full object-cover">
                     </div>
                     <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-slate-900 animate-pulse"></div>
                 </div>
@@ -186,7 +124,7 @@
             
             <!-- VIEW: TERMINAL -->
             <div id="view-terminal" class="view-section h-full max-w-4xl mx-auto flex flex-col">
-                <div class="glass-panel rounded-lg p-1 flex-1 flex flex-col shadow-[0_0_30px_rgba(0,0,0,0.3)] min-h-[400px]">
+                <div class="glass-panel rounded-lg p-1 flex-1 flex-col shadow-[0_0_30px_rgba(0,0,0,0.3)] min-h-[400px]">
                     <div class="bg-slate-950/80 rounded p-4 md:p-6 flex-1 flex flex-col overflow-hidden">
                         <!-- Terminal Header -->
                         <div class="flex gap-2 mb-4 border-b border-slate-800 pb-2 opacity-50">
@@ -463,136 +401,6 @@
         </div>
     </main>
 
-    <script>
-        // --- INITIALIZATION ---
-        lucide.createIcons();
-
-        // --- VIEW NAVIGATION ---
-        function switchView(viewName) {
-            // Reset nav buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('bg-cyan-500/10', 'text-cyan-400', 'border-cyan-500/20');
-                btn.classList.remove('text-pink-400', 'bg-pink-500/10', 'border-pink-500/20');
-                btn.classList.add('text-slate-500');
-            });
-            
-            // Highlight active button
-            const activeBtn = document.getElementById(`nav-${viewName}`);
-            if(activeBtn) {
-                activeBtn.classList.remove('text-slate-500');
-                
-                if (viewName === 'demo') {
-                    activeBtn.classList.add('bg-pink-500/10', 'text-pink-400', 'border-pink-500/20');
-                } else {
-                    activeBtn.classList.add('bg-cyan-500/10', 'text-cyan-400', 'border-cyan-500/20');
-                }
-            }
-
-            // Update Header
-            const titles = {
-                'terminal': 'TERMINAL_MODULE',
-                'projects': 'PROJECT_INDEX',
-                'demo': 'NEURAL_LINK_V1.0',
-                'skills': 'CAPABILITIES_MATRIX',
-                'contact': 'UPLINK_STATION'
-            };
-            const titleEl = document.getElementById('header-title');
-            
-            if(viewName === 'demo') {
-                titleEl.className = "text-base md:text-lg font-bold text-pink-500 uppercase tracking-widest flex items-center gap-2 truncate";
-            } else {
-                titleEl.className = "text-base md:text-lg font-bold text-cyan-500 uppercase tracking-widest flex items-center gap-2 truncate";
-            }
-            
-            titleEl.innerHTML = `<span class="animate-pulse">_</span> ${titles[viewName]}`;
-
-            // Transition Views
-            document.querySelectorAll('.view-section').forEach(el => {
-                el.classList.remove('fade-enter-active');
-                el.classList.add('hidden-view');
-            });
-
-            const target = document.getElementById(`view-${viewName}`);
-            target.classList.remove('hidden-view');
-            target.classList.add('fade-enter');
-            void target.offsetWidth; // force reflow
-            target.classList.add('fade-enter-active');
-        }
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu-overlay');
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex');
-        }
-
-        // --- TERMINAL LOGIC ---
-        const terminalInput = document.getElementById('terminal-input');
-        const terminalOutput = document.getElementById('terminal-output');
-
-        const commands = {
-            'help': 'Available commands: <span class="text-cyan-400">whoami</span>, <span class="text-cyan-400">about</span>, <span class="text-cyan-400">projects</span>, <span class="text-pink-400">demo</span>, <span class="text-cyan-400">skills</span>, <span class="text-cyan-400">contact</span>, <span class="text-cyan-400">clear</span>',
-            'whoami': 'Ramachandra Dayal K // AI Engineer based in Chennai, India.',
-            'projects': 'Loading Project Index...',
-            'demo': 'ESTABLISHING NEURAL LINK... CONNECTING TO JARVIS...',
-            'skills': 'Analyzing Neural Pathways...',
-            'contact': 'Initiating Uplink Protocol...',
-        };
-
-        terminalInput.addEventListener('keydown', async function(e) {
-            if (e.key === 'Enter') {
-                const input = this.value.trim();
-                if (input === '') return;
-
-                // User Line
-                const userLine = document.createElement('div');
-                userLine.className = 'text-cyan-400 mb-1 mt-2';
-                userLine.innerHTML = `<span class="mr-2 font-bold">➜</span>${input}`;
-                terminalOutput.appendChild(userLine);
-                
-                const cmd = input.toLowerCase();
-
-                // System Response
-                if (cmd === 'clear') {
-                    terminalOutput.innerHTML = '';
-                } else if (commands[cmd]) {
-                    const responseLine = document.createElement('div');
-                    responseLine.className = 'text-slate-300 mb-2';
-                    responseLine.innerHTML = commands[cmd];
-                    terminalOutput.appendChild(responseLine);
-
-                    // Trigger navigation
-                    if (cmd === 'projects') setTimeout(() => switchView('projects'), 800);
-                    if (cmd === 'demo') setTimeout(() => switchView('demo'), 1000);
-                    if (cmd === 'skills') setTimeout(() => switchView('skills'), 800);
-                    if (cmd === 'contact') setTimeout(() => switchView('contact'), 800);
-                } else {
-                    const errorLine = document.createElement('div');
-                    errorLine.className = 'text-red-400 mb-2';
-                    errorLine.innerText = `Error: Command '${input}' not recognized.`;
-                    terminalOutput.appendChild(errorLine);
-                }
-
-                this.value = '';
-                terminalOutput.scrollTop = terminalOutput.scrollHeight;
-            }
-        });
-
-        // --- LIVE SIMULATION (Stats & Clock) ---
-        setInterval(() => {
-            document.getElementById('system-clock').innerText = new Date().toLocaleTimeString();
-        }, 1000);
-
-        setInterval(() => {
-            const gpu = Math.floor(Math.random() * 40) + 10;
-            const ram = Math.floor(Math.random() * 20) + 30;
-            document.getElementById('gpu-stat').innerText = `${gpu}%`;
-            document.getElementById('gpu-bar').style.width = `${gpu}%`;
-            document.getElementById('ram-stat').innerText = `${ram}%`;
-            document.getElementById('ram-bar').style.width = `${ram}%`;
-        }, 2500);
-
-        // Initialize
-        switchView('terminal');
-    </script>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
