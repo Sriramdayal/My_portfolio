@@ -1,6 +1,6 @@
 # Portfolio - RDK.ai
 
-A futuristic, cyberpunk-themed portfolio website for Ramachandra Dayal K, an AI Engineer specializing in Computer Vision and NLP.
+A futuristic, cyberpunk-themed portfolio.
 
 ## Features
 - **Cyberpunk UI**: Custom scrollbars, glassmorphism, and neon aesthetics.
