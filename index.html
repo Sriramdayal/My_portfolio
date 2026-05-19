@@ -111,7 +111,12 @@
                     <span class="animate-pulse">_</span> TERMINAL_MODULE
                 </h2>
             </div>
-            <div class="flex items-center gap-4 text-[10px] md:text-xs font-mono text-slate-500">
+            <div class="flex items-center gap-2 md:gap-4 text-[10px] md:text-xs font-mono text-slate-500">
+                <button onclick="toggleFX()" id="fx-toggle" class="flex items-center gap-1 px-2 py-0.5 md:py-1 rounded bg-slate-900 border border-cyan-500/30 text-cyan-400 hover:border-cyan-400 transition-colors">
+                    <i data-lucide="eye" class="w-3 h-3"></i>
+                    <span>FX: ON</span>
+                </button>
+                <span class="hidden sm:block opacity-20">|</span>
                 <span class="hidden sm:block text-emerald-500">● ONLINE</span>
                 <span class="hidden sm:block opacity-20">|</span>
                 <span id="system-clock">00:00:00</span>
@@ -136,18 +141,7 @@
                         
                         <!-- Output History -->
                         <div id="terminal-output" class="flex-1 overflow-y-auto space-y-2 mb-2 text-sm md:text-base font-fira-code break-words">
-                            <div class="text-slate-500">// Initializing System...</div>
-                            <div class="text-slate-500">// Loading Bio-Metrics... OK</div>
-                            <div class="text-slate-300">Welcome to the portfolio of <span class="text-cyan-400 font-bold">Ramachandra Dayal K</span>.</div>
-                            <div class="text-slate-300">Specialization: <span class="text-purple-400">Computer Vision & NLP</span>.</div>
-                            <br>
-                            <div class="text-yellow-500 border-l-2 border-yellow-500 pl-2 italic opacity-80 text-xs md:text-sm">
-                                🔭 I’m working on: LLM fine-tuning
-                                🌱 Currently learning: Deep Learning & Model Optimization
-                                💬 Ask me about: Computer Vision,NLP, ML, Python, or Automation
-                            </div>
-                            <br>
-                            <div class="text-cyan-600">Type 'help'</div>
+                            <div class="text-slate-500">// Establishing secure node uplink...</div>
                         </div>
 
                         <!-- Input Line -->
@@ -283,18 +277,17 @@
             <div id="view-demo" class="view-section hidden-view h-full max-w-6xl mx-auto flex flex-col">
                 <!-- Safe height calculation for mobile: 80% of viewport height max -->
                 <div class="glass-panel p-1 rounded-xl h-full flex flex-col shadow-[0_0_30px_rgba(236,72,153,0.2)] border-pink-500/30 h-[80dvh] md:h-full min-h-[500px]">
-                    <div class="bg-slate-950/90 rounded-lg flex-1 overflow-hidden relative">
+                    <div class="bg-slate-950/90 rounded-lg flex-1 overflow-hidden relative flex flex-col">
                         <div class="absolute top-2 right-2 z-10 flex items-center gap-2 px-3 py-1 bg-slate-900/80 rounded-full border border-pink-500/30 text-xs text-pink-400">
                             <span class="w-2 h-2 bg-pink-500 rounded-full animate-pulse"></span>
                             LIVE
                         </div>
                         <!-- iframe embedding -->
                         <iframe
-	                       src="https://sriram279-jarvis-agent.hf.space"
-	                       frameborder="0"
-	                       width="850"
-	                       height="450"
-						></iframe>
+                           src="https://sriram279-jarvis-agent.hf.space"
+                           frameborder="0"
+                           class="w-full flex-1 min-h-[450px]"
+                        ></iframe>
 
                     </div>
                 </div>
@@ -372,12 +365,20 @@
 
             <!-- VIEW: CONTACT -->
             <div id="view-contact" class="view-section hidden-view max-w-2xl mx-auto">
-                <div class="glass-panel p-6 md:p-8 rounded-xl">
+                <div class="glass-panel p-6 md:p-8 rounded-xl relative overflow-hidden">
+                    <!-- TRANSMISSION OVERLAY (hidden by default) -->
+                    <div id="transmission-overlay" class="absolute inset-0 bg-slate-950/95 z-20 hidden flex-col items-center justify-center space-y-4 p-6 backdrop-blur-md">
+                        <div class="w-12 h-12 rounded-full border-2 border-orange-500 border-t-transparent animate-spin mb-2"></div>
+                        <div class="font-mono text-[11px] md:text-xs text-orange-400 space-y-1 w-full max-w-sm" id="transmission-status">
+                            <!-- Status updates injected dynamically -->
+                        </div>
+                    </div>
+                    
                     <h2 class="text-xl md:text-2xl font-bold mb-6 text-slate-100 flex items-center gap-2">
                         <i data-lucide="send" class="text-orange-400"></i> Initiate Sequence
                     </h2>
                     
-                    <form action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST" class="space-y-5">
+                    <form id="uplink-form" action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST" class="space-y-5">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div class="space-y-2">
                                 <label class="text-xs text-slate-500 uppercase font-bold tracking-wider">Your Name</label>
@@ -402,6 +403,7 @@
         </div>
     </main>
 
+    <div id="scanlines" class="scanlines"></div>
     <script src="assets/js/script.js"></script>
 </body>
 </html>
