@@ -69,3 +69,177 @@ gradio-app {
     border-color: rgba(6, 182, 212, 0.3);
 }
 
+/* --- OS THEME ADAPTATION --- */
+:root {
+  /* Default Cyberpunk (data-os="default") */
+  --primary-color: #06b6d4; /* cyan */
+  --primary-glow: rgba(6, 182, 212, 0.15);
+  --secondary-color: #ec4899; /* pink */
+  --secondary-glow: rgba(236, 72, 153, 0.15);
+  --bg-color: #020617; /* slate-950 */
+  --card-bg: rgba(15, 23, 42, 0.7); /* slate-900/70 */
+  --card-border: rgba(30, 41, 59, 0.5); /* slate-800/50 */
+  --text-primary: #e2e8f0; /* slate-200 */
+  --text-muted: #94a3b8; /* slate-400 */
+  --font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --panel-radius: 8px;
+}
+
+html[data-os="ios"], html[data-os="macos"] {
+  /* iOS Theme: Clean San Francisco-like typography, frosted-glass, ios system blue, rounded corners */
+  --primary-color: #007aff; /* iOS blue */
+  --primary-glow: rgba(0, 122, 255, 0.15);
+  --secondary-color: #ff2d55; /* iOS pink */
+  --secondary-glow: rgba(255, 45, 85, 0.15);
+  --bg-color: #000000; /* Apple Pure Black */
+  --card-bg: rgba(28, 28, 30, 0.85); /* iOS System Gray 6 */
+  --card-border: rgba(54, 54, 56, 0.5);
+  --text-primary: #ffffff;
+  --text-muted: #8e8e93; /* iOS System Gray */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --panel-radius: 14px;
+}
+
+html[data-os="android"] {
+  /* Android Theme: Roboto font, Material Design teal, flat slate surfaces with distinct gray colors */
+  --primary-color: #00b0ff; /* Material Cyan-Blue */
+  --primary-glow: rgba(0, 176, 255, 0.12);
+  --secondary-color: #ffab40; /* Material Orange */
+  --secondary-glow: rgba(255, 171, 64, 0.12);
+  --bg-color: #121212; /* Material Dark Mode Base */
+  --card-bg: #1e1e1e; /* Material Surface */
+  --card-border: #2e2e2e;
+  --text-primary: rgba(255, 255, 255, 0.87);
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --panel-radius: 8px;
+}
+
+html[data-os="windows"] {
+  /* Windows Fluent Theme: Segoe UI, Fluent Blue, dark acrylic look, sharp corners */
+  --primary-color: #60cdff; /* Fluent Teal-Blue */
+  --primary-glow: rgba(96, 205, 255, 0.12);
+  --secondary-color: #cc66ff; /* Fluent Purple */
+  --secondary-glow: rgba(204, 102, 255, 0.12);
+  --bg-color: #202020; /* Windows Mica Dark */
+  --card-bg: rgba(32, 32, 32, 0.7); /* Fluent Acrylic */
+  --card-border: rgba(255, 255, 255, 0.07);
+  --text-primary: #ffffff;
+  --text-muted: #a6a6a6;
+  --font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, sans-serif;
+  --panel-radius: 4px;
+}
+
+/* Apply CSS Variables Dynamically */
+body {
+    background-color: var(--bg-color) !important;
+    font-family: var(--font-family) !important;
+    color: var(--text-primary) !important;
+}
+
+.glass-panel {
+    background: var(--card-bg) !important;
+    border-color: var(--card-border) !important;
+    border-radius: var(--panel-radius) !important;
+}
+.glass-panel:hover {
+    box-shadow: 0 0 20px var(--primary-glow) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Input Fields and Buttons Border Radius */
+button, input, textarea {
+    border-radius: var(--panel-radius) !important;
+}
+
+/* Primary/Secondary Accent Color Overrides */
+.text-cyan-400, .text-cyan-500 {
+    color: var(--primary-color) !important;
+}
+.text-pink-400, .text-pink-500, .text-purple-400, .text-purple-500 {
+    color: var(--secondary-color) !important;
+}
+.bg-cyan-500 {
+    background-color: var(--primary-color) !important;
+}
+.bg-pink-500, .bg-purple-500, .bg-orange-600 {
+    background-color: var(--secondary-color) !important;
+}
+.border-cyan-500\/50, .border-cyan-500\/20, .border-cyan-500\/30 {
+    border-color: var(--primary-color) !important;
+}
+.border-slate-800, .border-slate-700, .border-slate-800\/50 {
+    border-color: var(--card-border) !important;
+}
+
+/* Navigation Buttons Style Override */
+.nav-btn.active {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    background-color: var(--primary-glow) !important;
+}
+.nav-btn.active i {
+    color: var(--primary-color) !important;
+}
+
+/* Hide scanlines on mobile OS for a clean app experience */
+html[data-os="ios"] .scanlines,
+html[data-os="android"] .scanlines {
+    display: none !important;
+}
+
+/* --- MOBILE BOTTOM TAB BAR STYLING --- */
+.mobile-nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    padding: 6px 10px;
+    width: 64px;
+    height: 100%;
+    color: #94a3b8; /* Slate-400 default */
+    background: transparent;
+    border: none;
+    outline: none;
+}
+.mobile-nav-btn i {
+    margin-bottom: 2px;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+}
+.mobile-nav-btn.active {
+    color: var(--primary-color) !important;
+}
+.mobile-nav-btn.active i {
+    color: var(--primary-color) !important;
+    transform: scale(1.1);
+}
+.mobile-nav-btn:active i {
+    transform: scale(0.9);
+}
+
+/* Force standard height structure on mobile views */
+@media (max-width: 768px) {
+    /* Mobile-specific view wrapper adjustment */
+    .view-section {
+        height: auto !important;
+        min-height: calc(100vh - 128px);
+        padding-bottom: 24px;
+    }
+}
+
+/* Prevent bounce and scroll chaining on viewport for native-app feel */
+.overflow-y-auto {
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch; /* Momentum scrolling for iOS safari */
+}
+
+html, body {
+    overscroll-behavior: none;
+}
+

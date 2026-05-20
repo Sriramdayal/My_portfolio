@@ -4,22 +4,31 @@ lucide.createIcons();
 // --- VIEW NAVIGATION ---
 function switchView(viewName) {
     // Reset nav buttons
-    document.querySelectorAll('.nav-btn').forEach(btn => {
+    document.querySelectorAll('.nav-btn, .mobile-nav-btn').forEach(btn => {
         btn.classList.remove('bg-cyan-500/10', 'text-cyan-400', 'border-cyan-500/20');
         btn.classList.remove('text-pink-400', 'bg-pink-500/10', 'border-pink-500/20');
+        btn.classList.remove('active');
         btn.classList.add('text-slate-500');
     });
 
-    // Highlight active button
+    // Highlight active button (Desktop)
     const activeBtn = document.getElementById(`nav-${viewName}`);
     if (activeBtn) {
         activeBtn.classList.remove('text-slate-500');
+        activeBtn.classList.add('active');
 
         if (viewName === 'demo') {
             activeBtn.classList.add('bg-pink-500/10', 'text-pink-400', 'border-pink-500/20');
         } else {
             activeBtn.classList.add('bg-cyan-500/10', 'text-cyan-400', 'border-cyan-500/20');
         }
+    }
+
+    // Highlight active button (Mobile)
+    const activeMobileBtn = document.getElementById(`mobile-nav-${viewName}`);
+    if (activeMobileBtn) {
+        activeMobileBtn.classList.remove('text-slate-500');
+        activeMobileBtn.classList.add('active');
     }
 
     // Update Header
@@ -51,12 +60,6 @@ function switchView(viewName) {
     target.classList.add('fade-enter');
     void target.offsetWidth; // force reflow
     target.classList.add('fade-enter-active');
-}
-
-function toggleMobileMenu() {
-    const menu = document.getElementById('mobile-menu-overlay');
-    menu.classList.toggle('hidden');
-    menu.classList.toggle('flex');
 }
 
 // --- VISUAL EFFECTS CONTROL ---
@@ -308,6 +311,39 @@ setInterval(() => {
     document.getElementById('ram-bar').style.width = `${ram}%`;
 }, 2500);
 
+// --- OS DETECTION & THEME ---
+function detectOS() {
+    const ua = window.navigator.userAgent.toLowerCase();
+    
+    // Explicit override via URL parameter for testing/verification (e.g. ?os=ios)
+    const urlParams = new URLSearchParams(window.location.search);
+    const osOverride = urlParams.get('os');
+    if (osOverride && ['ios', 'android', 'windows', 'macos', 'default'].includes(osOverride.toLowerCase())) {
+        return osOverride.toLowerCase();
+    }
+
+    if (ua.includes("iphone") || ua.includes("ipad") || ua.includes("ipod") || (ua.includes("macintosh") && navigator.maxTouchPoints > 1)) {
+        return "ios";
+    }
+    if (ua.includes("android")) {
+        return "android";
+    }
+    if (ua.includes("windows")) {
+        return "windows";
+    }
+    if (ua.includes("mac")) {
+        return "macos";
+    }
+    return "default";
+}
+
+function applyOSTheme() {
+    const os = detectOS();
+    document.documentElement.setAttribute('data-os', os);
+    console.log(`[SYS] OS Detected: ${os}. Applying theme configuration.`);
+}
+
 // Initialize
+applyOSTheme();
 switchView('terminal');
 runWelcomeSequence();

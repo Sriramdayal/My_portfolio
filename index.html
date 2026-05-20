@@ -15,18 +15,7 @@
 <!-- h-[100dvh] fixes mobile browser address bar jumping issues -->
 <body class="bg-slate-950 text-slate-200 font-mono h-[100dvh] overflow-hidden flex selection:bg-cyan-500/30">
 
-    <!-- MOBILE MENU OVERLAY -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-950/95 z-50 hidden flex-col items-center justify-center space-y-8 md:hidden backdrop-blur-xl transition-opacity duration-300">
-        <button onclick="switchView('terminal'); toggleMobileMenu()" class="text-2xl font-bold tracking-widest text-cyan-400 p-4 w-full text-center active:bg-slate-900">TERMINAL</button>
-        <button onclick="switchView('projects'); toggleMobileMenu()" class="text-2xl font-medium text-slate-300 hover:text-cyan-400 p-4 w-full text-center active:bg-slate-900">PROJECTS</button>
-        <button onclick="switchView('demo'); toggleMobileMenu()" class="text-2xl font-medium text-pink-400 hover:text-pink-300 p-4 w-full text-center active:bg-slate-900">NEURAL LINK</button>
-        <button onclick="switchView('skills'); toggleMobileMenu()" class="text-2xl font-medium text-slate-300 hover:text-cyan-400 p-4 w-full text-center active:bg-slate-900">SKILLS</button>
-        <button onclick="switchView('contact'); toggleMobileMenu()" class="text-2xl font-medium text-slate-300 hover:text-cyan-400 p-4 w-full text-center active:bg-slate-900">CONTACT</button>
-        
-        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 p-2 text-slate-500 hover:text-red-400 rounded-full active:bg-slate-800">
-            <i data-lucide="x" class="w-8 h-8"></i>
-        </button>
-    </div>
+
 
     <!-- SIDEBAR (Desktop) -->
     <aside class="hidden md:flex w-72 bg-slate-900/50 border-r border-slate-800 flex-col justify-between z-20 backdrop-blur-sm">
@@ -104,9 +93,6 @@
         <!-- Header -->
         <header class="h-16 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/50 flex items-center justify-between px-4 md:px-6 z-10 shrink-0">
             <div class="flex items-center gap-3">
-                <button onclick="toggleMobileMenu()" class="md:hidden p-2 -ml-2 text-slate-400 hover:text-cyan-400 active:bg-slate-800 rounded-lg">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-                </button>
                 <h2 id="header-title" class="text-base md:text-lg font-bold text-cyan-500 uppercase tracking-widest flex items-center gap-2 truncate max-w-[200px] md:max-w-none">
                     <span class="animate-pulse">_</span> TERMINAL_MODULE
                 </h2>
@@ -402,6 +388,30 @@
 
         </div>
     </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION (Tab Bar) -->
+    <nav id="mobile-tab-bar" class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-slate-950/90 border-t border-slate-800 flex items-center justify-around z-40 px-2 backdrop-blur-lg">
+        <button onclick="switchView('terminal')" id="mobile-nav-terminal" class="mobile-nav-btn active">
+            <i data-lucide="terminal"></i>
+            <span class="text-[10px] tracking-wider uppercase">Console</span>
+        </button>
+        <button onclick="switchView('projects')" id="mobile-nav-projects" class="mobile-nav-btn">
+            <i data-lucide="cpu"></i>
+            <span class="text-[10px] tracking-wider uppercase">Projects</span>
+        </button>
+        <button onclick="switchView('demo')" id="mobile-nav-demo" class="mobile-nav-btn">
+            <i data-lucide="bot"></i>
+            <span class="text-[10px] tracking-wider uppercase">Neural</span>
+        </button>
+        <button onclick="switchView('skills')" id="mobile-nav-skills" class="mobile-nav-btn">
+            <i data-lucide="activity"></i>
+            <span class="text-[10px] tracking-wider uppercase">Skills</span>
+        </button>
+        <button onclick="switchView('contact')" id="mobile-nav-contact" class="mobile-nav-btn">
+            <i data-lucide="radio-tower"></i>
+            <span class="text-[10px] tracking-wider uppercase">Uplink</span>
+        </button>
+    </nav>
 
     <div id="scanlines" class="scanlines"></div>
     <script src="assets/js/script.js"></script>
